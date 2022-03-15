@@ -10,7 +10,6 @@ module.exports = {
     './safelist.txt'
   ],
   theme: {
-    container: false,
     screens: {
       'sm': '501px',
       'md': '768px',
@@ -35,7 +34,7 @@ module.exports = {
       }
     }
   },
-  corePlugin: {
+  corePlugins: {
     container: false,
   },
   plugins: [

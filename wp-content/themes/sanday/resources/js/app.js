@@ -1,8 +1,11 @@
 // Navigation toggle
-window.addEventListener('load', function () {
-      let main_navigation = document.querySelector('#primary-menu');
-      document.querySelector('#primary-menu-toggle').addEventListener('click', function (e) {
-            e.preventDefault();
-            main_navigation.classList.toggle('hidden');
-      });
+document.addEventListener('DOMContentLoaded', function() {
+  const $mainNav = document.querySelector('#primary-menu')
+  const $mobileToggle = document.querySelector('#primary-menu-toggle')
+  if ($mainNav && $mobileToggle) {
+    $mobileToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      $mainNav.classList.toggle('hidden')
+    })
+  }
 });

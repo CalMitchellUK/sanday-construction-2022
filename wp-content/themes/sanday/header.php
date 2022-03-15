@@ -17,10 +17,10 @@
 
 	<?php do_action( 'tailpress_header' ); ?>
 
-	<header>
+	<header class="bg-dark text-light">
 
-		<div class="mx-auto container">
-			<div class="lg:flex lg:justify-between lg:items-center border-b py-6">
+		<div class="container">
+			<div class="lg:flex lg:justify-between lg:items-center py-6">
 				<div class="flex justify-between items-center">
 					<div>
 						<?php if ( has_custom_logo() ) { ?>
@@ -31,11 +31,6 @@
 									<?php echo get_bloginfo( 'name' ); ?>
 								</a>
 							</div>
-
-							<p class="text-sm font-light text-gray-600">
-								<?php echo get_bloginfo( 'description' ); ?>
-							</p>
-
 						<?php } ?>
 					</div>
 
@@ -56,10 +51,11 @@
 				wp_nav_menu(
 					array(
 						'container_id'    => 'primary-menu',
-						'container_class' => 'hidden bg-gray-100 mt-4 p-4 lg:mt-0 lg:p-0 lg:bg-transparent lg:block',
-						'menu_class'      => 'lg:flex lg:-mx-4',
+						'container_class' => 'mt-4 lg:mt-0 hidden lg:block',
+						'menu_class'      => 'lg:flex',
 						'theme_location'  => 'primary',
-						'li_class'        => 'lg:mx-4',
+						'li_class'        => 'lg:mr-4 lg:last:mr-0',
+						'anchor_class'    => 'w-full block',
 						'fallback_cb'     => false,
 					)
 				);

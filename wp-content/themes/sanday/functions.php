@@ -107,3 +107,15 @@ function tailpress_nav_menu_add_submenu_class( $classes, $args, $depth ) {
 }
 
 add_filter( 'nav_menu_submenu_css_class', 'tailpress_nav_menu_add_submenu_class', 10, 3 );
+
+add_filter(
+	'nav_menu_link_attributes',
+	function( $classes, $item, $args ) {
+		if ( isset( $args->anchor_class ) ) {
+			$classes['class'] = $args->anchor_class;
+		}
+		return $classes;
+	},
+	1,
+	3
+);
