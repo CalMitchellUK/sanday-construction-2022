@@ -1,37 +1,44 @@
 const _ = require("lodash");
-const theme = require('./theme.json');
 const tailpress = require("@jeffreyvr/tailwindcss-tailpress");
 
 module.exports = {
-    content: [
-        './*/*.php',
-        './**/*.php',
-        './resources/css/*.css',
-        './resources/js/*.js',
-        './safelist.txt'
-    ],
-    theme: {
-        container: {
-            padding: {
-                DEFAULT: '1rem',
-                sm: '2rem',
-                lg: '0rem'
-            },
-        },
-        extend: {
-            colors: tailpress.colorMapper(tailpress.theme('settings.color.palette', theme)),
-            fontSize: tailpress.fontSizeMapper(tailpress.theme('settings.typography.fontSizes', theme))
-        },
-        screens: {
-            'xs': '480px',
-            'sm': '600px',
-            'md': '782px',
-            'lg': tailpress.theme('settings.layout.contentSize', theme),
-            'xl': tailpress.theme('settings.layout.wideSize', theme),
-            '2xl': '1440px'
-        }
+  content: [
+    './*/*.php',
+    './**/*.php',
+    './resources/css/*.css',
+    './resources/js/*.js',
+    './safelist.txt'
+  ],
+  theme: {
+    container: false,
+    screens: {
+      'sm': '501px',
+      'md': '768px',
+      'lg': '1025px',
+      'xl': '1367px',
+      '2xl': '1601px',
     },
-    plugins: [
-        tailpress.tailwind
-    ]
+    extend: {
+      colors: {
+        primary: '#00c496',
+        secondary: '#14B8A6',
+        dark: '#212121',
+        light: '#f8f8f8',
+      },
+      fontSize: {
+        small: '0.875rem',
+        regular: '1rem',
+        large: '1.125rem',
+        xl: '1.25rem',
+        xxl: '1.5rem',
+        xxxl: '1.875rem',
+      }
+    }
+  },
+  corePlugin: {
+    container: false,
+  },
+  plugins: [
+    tailpress.tailwind
+  ]
 };
