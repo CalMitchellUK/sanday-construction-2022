@@ -1,4 +1,10 @@
 <?php
+/**
+ * The main functionality of the theme.
+ *
+ * @package sanday
+ * @since 0.0.0
+ */
 
 /**
  * Theme setup.
@@ -50,8 +56,7 @@ add_action( 'wp_enqueue_scripts', 'tailpress_enqueue_scripts' );
 /**
  * Get asset path.
  *
- * @param string  $path Path to asset.
- *
+ * @param string $path Path to asset.
  * @return string
  */
 function tailpress_asset( $path ) {
@@ -59,7 +64,7 @@ function tailpress_asset( $path ) {
 		return get_stylesheet_directory_uri() . '/' . $path;
 	}
 
-	return add_query_arg( 'time', time(),  get_stylesheet_directory_uri() . '/' . $path );
+	return add_query_arg( 'time', time(), get_stylesheet_directory_uri() . '/' . $path );
 }
 
 /**
@@ -68,6 +73,7 @@ function tailpress_asset( $path ) {
  * @param string  $classes String of classes.
  * @param mixed   $item The curren item.
  * @param WP_Term $args Holds the nav menu arguments.
+ * @param string  $depth Depth of li.
  *
  * @return array
  */
@@ -89,8 +95,8 @@ add_filter( 'nav_menu_css_class', 'tailpress_nav_menu_add_li_class', 10, 4 );
  * Adds option 'submenu_class' to 'wp_nav_menu'.
  *
  * @param string  $classes String of classes.
- * @param mixed   $item The curren item.
  * @param WP_Term $args Holds the nav menu arguments.
+ * @param string  $depth Depth of li.
  *
  * @return array
  */
@@ -108,6 +114,9 @@ function tailpress_nav_menu_add_submenu_class( $classes, $args, $depth ) {
 
 add_filter( 'nav_menu_submenu_css_class', 'tailpress_nav_menu_add_submenu_class', 10, 3 );
 
+/**
+ * Passes anchor classes to nav items.
+ */
 add_filter(
 	'nav_menu_link_attributes',
 	function( $classes, $item, $args ) {
