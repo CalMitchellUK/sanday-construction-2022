@@ -1,7 +1,6 @@
 <?php
 /**
- * Template Name: Home
- * Description: The default template for the homepage.
+ * Template Name: Gallery
  *
  * @package sanday
  * @since 0.0.0
