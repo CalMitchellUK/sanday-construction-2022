@@ -119,3 +119,60 @@ add_filter(
 	1,
 	3
 );
+
+/**
+ * ==============================================
+ * Disable "Post" Post-type
+ * ==============================================
+ */
+// Removes "Post" from admin sidebar.
+add_action(
+	'admin_menu',
+	function() {
+		remove_menu_page( 'edit.php' );
+	}
+);
+// Removes "New post" from admin header.
+add_action(
+	'admin_bar_menu',
+	function( $wp_admin_bar ) {
+		$wp_admin_bar->remove_node( 'new-post' );
+	},
+	999
+);
+/**
+ * Removes "New post" from admin header.
+ */
+function sc_remove_add_new_post_href_in_admin_bar() {
+	?>
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function() {
+			var $addNew = document.getElementById('wp-admin-bar-new-content');
+			if (!$addNew) {
+				return;
+			}
+			var $addNewA = $addNew.getElementsByTagName('a')[0];
+			if ($addNewA) {
+				$addNewA.setAttribute('href', '#!');
+			}
+		})
+	</script>
+	<?php
+}
+add_action( 'admin_footer', 'sc_remove_add_new_post_href_in_admin_bar' );
+add_action(
+	'init',
+	function() {
+		if ( is_user_logged_in() ) {
+				add_action( 'wp_footer', 'sc_remove_add_new_post_href_in_admin_bar' );
+		}
+	}
+);
+// Removes Dashboard "Draft Post".
+add_action(
+	'wp_dashboard_setup',
+	function() {
+		remove_meta_box( 'dashboard_quick_press', 'dashboard', 'side' );
+	},
+	999
+);
