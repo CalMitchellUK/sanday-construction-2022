@@ -31,6 +31,12 @@ module.exports = {
         xl: '1.25rem',
         xxl: '1.5rem',
         xxxl: '1.875rem',
+      },
+      maxHeight: {
+        '60vh': '60vh'
+      },
+      padding: {
+        'video': '56.25%'
       }
     }
   },
