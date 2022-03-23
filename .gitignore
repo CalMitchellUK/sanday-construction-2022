@@ -24,7 +24,7 @@ node_modules/
 *.sql
 *.sqlite
 license.txt
-index.php
+/index.php
 readme.html
 wp-activate.php
 wp-blog-header.php
