@@ -63,15 +63,19 @@ article > *:not(.entry-content),
   }
 }
 
-#page-banner-image {
-  @apply relative w-full max-h-60vh overflow-hidden;
 
-  .ratio {
-    @apply relative w-full pb-video;
+#site-header {
+  background: linear-gradient(rgba(0, 0, 0, 0.75), transparent);
+
+  &.is-stuck {
+    @apply bg-dark;
   }
+}
 
-  img {
-    @apply absolute left-0 top-0 w-full h-full object-cover;
+body.logged-in #site-header {
+  margin-top: 46px;
+
+  @media only screen and (min-width: 783px) {
+    margin-top: 32px;
   }
-
 }

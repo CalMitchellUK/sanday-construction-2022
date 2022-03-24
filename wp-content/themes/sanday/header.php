@@ -9,7 +9,7 @@
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class( 'bg-white text-gray-900 antialiased' ); ?>>
+<body <?php body_class( 'bg-light text-dark antialiased' ); ?>>
 
 <?php do_action( 'tailpress_site_before' ); ?>
 
@@ -17,7 +17,7 @@
 
 	<?php do_action( 'tailpress_header' ); ?>
 
-	<header class="bg-dark text-light">
+	<header id="site-header" class="fixed left-0 top-0 w-full z-10 text-white transition-colors duration-500">
 
 		<div class="container">
 			<div class="lg:flex lg:justify-between lg:items-center py-6">
@@ -66,6 +66,18 @@
 
 	<div id="content" class="site-content flex-grow">
 
-		<?php do_action( 'tailpress_content_start' ); ?>
+		<?php
+		$banner_image = get_field( 'banner_image' );
+		if ( $banner_image ) {
+			echo '<div id="page-banner-image" class="relative w-full max-h-60vh overflow-hidden">';
+			// Ratio.
+			echo '<div class="relative w-full pb-video"></div>';
+			// IMG.
+			echo wp_get_attachment_image( $banner_image, 'full', null, array( 'class' => 'absolute left-0 top-0 w-full h-full object-cover' ) );
+			// Overlay.
+			echo '<div class="absolute inset-0 bg-dark bg-opacity-50"></div>';
+			echo '</div>';
+		}
+		?>
 
 		<main>

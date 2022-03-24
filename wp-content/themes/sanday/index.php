@@ -8,15 +8,6 @@
 
 get_header();
 
-
-$banner_image = get_field( 'banner_image' );
-if ( $banner_image ) {
-	echo '<div id="page-banner-image">';
-	echo '<div class="ratio"></div>';
-	echo wp_get_attachment_image( $banner_image, 'full' );
-	echo '</div>';
-}
-
 ?>
 
 <div class="container my-8">

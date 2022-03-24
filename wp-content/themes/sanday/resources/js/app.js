@@ -9,3 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
     })
   }
 });
+
+const $siteHeader = document.querySelector('#site-header');
+if ($siteHeader) {
+  window.addEventListener('scroll', () => {
+    $siteHeader.classList.toggle('is-stuck', window.scrollY >= 10)
+  });
+}
