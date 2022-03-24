@@ -1,0 +1,48 @@
+/* Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Editor Styles */
+@import './editor-style.min.css';
+
+/* App Styles */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif font-bold text-primary;
+}
+
+.container {
+  @apply max-w-full mx-auto px-2.5 xl:px-5;
+
+  @screen sm {
+    max-width: 480px;
+  }
+  @screen md {
+    max-width: 720px;
+  }
+  @screen lg {
+    max-width: 960px;
+  }
+  @screen xl {
+    max-width: 1280px;
+  }
+  @screen 2xl {
+    max-width: 1366px;
+  }
+}
+
+#site-header {
+  background: linear-gradient(rgba(0, 0, 0, 0.75), transparent);
+
+  &.is-stuck {
+    @apply bg-dark;
+  }
+}
+
+body.logged-in #site-header {
+  margin-top: 46px;
+
+  @media only screen and (min-width: 783px) {
+    margin-top: 32px;
+  }
+}

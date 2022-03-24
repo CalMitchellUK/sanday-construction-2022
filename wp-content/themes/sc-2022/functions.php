@@ -44,14 +44,30 @@ add_action( 'after_setup_theme', 'tailpress_setup' );
 /**
  * Enqueue theme assets.
  */
-function tailpress_enqueue_scripts() {
+function tailpress_enqueue_assets() {
 	$theme = wp_get_theme();
+	// Google fonts.
+	wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@400;700&display=swap', array(), $theme->get( 'Version' ) );
 
-	wp_enqueue_style( 'tailpress', tailpress_asset( 'css/app.css' ), array(), $theme->get( 'Version' ) );
+	// Tailpress.
+	wp_enqueue_style( 'theme', tailpress_asset( 'css/app.css' ), array(), $theme->get( 'Version' ) );
 	wp_enqueue_script( 'tailpress', tailpress_asset( 'js/app.js' ), array(), $theme->get( 'Version' ), true );
-}
 
-add_action( 'wp_enqueue_scripts', 'tailpress_enqueue_scripts' );
+	// Slick.
+	wp_enqueue_style( 'slick', get_stylesheet_directory_uri() . '/css/slick.min.css', array(), '1.0.1' );
+	wp_enqueue_style( 'accessible-slick-theme', '//cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/accessible-slick-theme.min.css', array(), '1.0.1' );
+	wp_enqueue_script( 'slick', '//cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/slick.min.js', array( 'jquery' ), $theme->get( 'Version' ), true );
+}
+add_action( 'wp_enqueue_scripts', 'tailpress_enqueue_assets' );
+
+/**
+ * Enqueue admin assets.
+ */
+function enqueue_admin_assets() {
+	$theme = wp_get_theme();
+	wp_enqueue_script( 'admin', tailpress_asset( 'js/admin.js' ), array(), $theme->get( 'Version' ), true );
+}
+add_action( 'admin_enqueue_scripts', 'enqueue_admin_assets' );
 
 /**
  * Get asset path.
@@ -61,7 +77,7 @@ add_action( 'wp_enqueue_scripts', 'tailpress_enqueue_scripts' );
  */
 function tailpress_asset( $path ) {
 	if ( wp_get_environment_type() === 'production' ) {
-		return get_stylesheet_directory_uri() . '/' . $path;
+		return get_stylesheet_directory_uri() . '/' . str_replace( array( '.css', '.js' ), array( '.min.css', '.min.js' ), $path );
 	}
 
 	return add_query_arg( 'time', time(), get_stylesheet_directory_uri() . '/' . $path );
