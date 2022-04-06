@@ -8,11 +8,11 @@
 
 /* App Styles */
 h1, h2, h3, h4, h5, h6 {
-  @apply font-medium;
+  @apply font-serif font-bold;
 }
 
 .container {
-  @apply max-w-full mx-auto px-2.5 xl:px-5;
+  @apply max-w-full mx-auto;
 
   @screen sm {
     max-width: 480px;

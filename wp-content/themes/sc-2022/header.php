@@ -32,9 +32,9 @@ $site_url  = get_bloginfo( 'url' );
 
 	<header id="site-header" class="relative md:fixed left-0 top-0 w-full z-10 text-white transition-colors duration-500">
 		<!-- Gradient -->
-		<div class="gradient absolute w-full h-full block transition-opacity duration-200"></div>
+		<div class="gradient absolute inset-0 block transition-opacity duration-200"></div>
 
-		<div class="container relative">
+		<div class="container relative px-2.5 xl:px-5">
 			<div class="lg:flex justify-between items-center pt-1 pb-4">
 				<div class="flex justify-between items-center">
 					<div>
@@ -71,10 +71,9 @@ $site_url  = get_bloginfo( 'url' );
 		$banner_image = get_field( 'banner_image' );
 		if ( $banner_image ) {
 			?>
-			<div id="page-banner-image" class="relative w-full max-h-40vh md:max-h-80vh overflow-hidden">
+			<div id="page-banner-image" class="relative w-full max-h-40vh md:max-h-75vh overflow-hidden">
 				<div class="relative w-full pb-video"></div>
-				<?php echo wp_get_attachment_image( $banner_image, 'full', null, array( 'class' => 'absolute left-0 top-0 w-full h-full object-cover' ) ); ?>
-				<div class="absolute inset-0 bg-dark bg-opacity-50"></div>
+				<?php echo wp_get_attachment_image( $banner_image, 'banner-image', null, array( 'class' => 'absolute left-0 top-0 w-full h-full object-cover' ) ); ?>
 			</div>
 			<?php
 		} else {

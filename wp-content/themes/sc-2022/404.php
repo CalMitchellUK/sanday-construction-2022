@@ -10,7 +10,7 @@ get_header();
 
 ?>
 
-<div class="container my-8">
+<div class="container px-2.5 xl:px-5 my-8">
 
 	<div class="max-w-sm m-8">
 		<div class="text-5xl md:text-9xl border-primary border-b">404</div>

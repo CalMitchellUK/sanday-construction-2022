@@ -47,7 +47,7 @@ add_action( 'after_setup_theme', 'tailpress_setup' );
 function tailpress_enqueue_assets() {
 	$theme = wp_get_theme();
 	// Google fonts.
-	wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=family=Roboto:wght@400;500;700&display=swap', array(), $theme->get( 'Version' ) );
+	wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@400;500;700&display=swap', array(), $theme->get( 'Version' ) );
 
 	// Tailpress.
 	wp_enqueue_style( 'theme', tailpress_asset( 'css/app.css' ), array(), $theme->get( 'Version' ) );
@@ -203,4 +203,26 @@ add_action(
 		remove_meta_box( 'dashboard_quick_press', 'dashboard', 'side' );
 	},
 	999
+);
+
+add_action(
+	'init',
+	function() {
+		// Image sizes.
+		remove_image_size( '1536x1536' );
+		remove_image_size( '2048x2048' );
+		add_image_size( 'banner-image', 1920, 1080, true );
+		add_image_size( 'card', 1280, 720, true );
+	}
+);
+
+add_action(
+	'admin_init',
+	function() {
+		global $page ;
+		var_dump( $page  );
+		if ( 'home.php' === get_page_template_slug() ) {
+			remove_post_type_support( 'page', 'editor' );
+		}
+	}
 );

@@ -21,7 +21,8 @@ module.exports = {
 				light: '#f8f8f8',
 			},
 			fontFamily: {
-				sans: ['"Roboto"', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', '"Helvetica Neue"', 'Arial', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji";']
+				sans: ['"Roboto"', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', '"Helvetica Neue"', 'Arial', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji";'],
+				serif: ['Merriweather', 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif']
 			},
 			fontSize: {
 				small: '0.875rem',
@@ -36,7 +37,7 @@ module.exports = {
 			},
 			maxHeight: {
 				'40vh': '40vh',
-				'80vh': '80vh'
+				'75vh': '75vh'
 			},
 			padding: {
 				'video': '56.25%'
