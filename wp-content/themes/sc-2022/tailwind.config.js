@@ -15,14 +15,13 @@ module.exports = {
 		},
 		extend: {
 			colors: {
-				primary: '#43ac34',
+				primary: '#45ac34',
 				secondary: '#5792de',
-				dark: '#212121',
+				dark: '#1d1e1b',
 				light: '#f8f8f8',
 			},
 			fontFamily: {
-				sans: ['"Roboto"', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', '"Helvetica Neue"', 'Arial', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji";'],
-				serif: ['Merriweather', 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif']
+				sans: ['"Roboto"', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', '"Helvetica Neue"', 'Arial', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji";']
 			},
 			fontSize: {
 				small: '0.875rem',
@@ -32,8 +31,12 @@ module.exports = {
 				xxl: '1.5rem',
 				xxxl: '1.875rem',
 			},
+			maxWidth: {
+				'site-logo': '186px',
+			},
 			maxHeight: {
-				'60vh': '60vh'
+				'40vh': '40vh',
+				'80vh': '80vh'
 			},
 			padding: {
 				'video': '56.25%'

@@ -8,7 +8,7 @@
 
 /* App Styles */
 h1, h2, h3, h4, h5, h6 {
-  @apply font-serif font-bold text-primary;
+  @apply font-medium;
 }
 
 .container {
@@ -32,15 +32,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #site-header {
-  background: linear-gradient(rgba(0, 0, 0, 0.75), transparent);
+  @apply bg-transparent;
+
+  .gradient {
+    background: linear-gradient(rgba(29, 30, 27, 0.95), transparent);
+  }
 
   &.is-stuck {
     @apply bg-dark;
+
+    .gradient {
+      @apply opacity-0;
+    }
   }
 }
 
 body.logged-in #site-header {
-  margin-top: 46px;
+  @screen md {
+    margin-top: 46px;
+  }
 
   @media only screen and (min-width: 783px) {
     margin-top: 32px;

@@ -1,36 +1,46 @@
-function addMenuToggles() {
-  const $mainNav = document.querySelector('#primary-menu')
-  const $mobileToggle = document.querySelector('#primary-menu-toggle')
-  if ($mainNav && $mobileToggle) {
-    $mobileToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      $mainNav.classList.toggle('hidden')
-    })
-  }
-}
+(() => {
+  // Vars
+  const $siteHeader = qs('#site-header')
+  const $mobileToggle = qs('#primary-menu-toggle')
+  const $mainNav = qs('#primary-menu')
+  const $buffer = qs('#site-header-buffer')
 
-function removeEditPost() {
-  const $addNew = document.getElementById('wp-admin-bar-new-content')
-  if (!$addNew) {
-    return
-  }
-  const $addNewA = $addNew.getElementsByTagName('a')[0]
-  if ($addNewA) {
-    $addNewA.setAttribute('href', '#!')
-  }
-}
+  //
+  addEventListeners()
 
-function manageStickyHeader() {
-  const $siteHeader = document.querySelector('#site-header')
-  if ($siteHeader) {
-    window.addEventListener('scroll', () => {
-      $siteHeader.classList.toggle('is-stuck', window.scrollY >= 10)
-    })
-  }
-}
+  // Events
+  function addEventListeners() {
+    window.addEventListener('scroll', handleStickyHeader)
+    handleStickyHeader()
 
-document.addEventListener('DOMContentLoaded', function() {
-  addMenuToggles()
-  removeEditPost()
-  manageStickyHeader()
-});
+    window.addEventListener('resize', handleHeaderBuffer)
+    handleHeaderBuffer()
+
+    $mobileToggle.addEventListener('click', toggleMobileMenu)
+  }
+
+  // Actions
+  function handleStickyHeader() {
+    $siteHeader.classList.toggle('is-stuck', window.scrollY >= 10)
+  }
+
+  function toggleMobileMenu(e) {
+    e.preventDefault();
+    $mainNav.classList.toggle('hidden')
+  }
+
+  function handleHeaderBuffer() {
+    const headerHeight = $siteHeader.offsetHeight
+    $buffer.style = `height:${headerHeight || 0}px;`
+  }
+
+  // Utils
+  function qs(selector) {
+    return document.querySelector(selector) ?? document.createElement('a')
+  }
+
+  function qsa(selector) {
+    const $qsa = document.querySelectorAll(selector)
+    return [...$qsa]
+  }
+})()
