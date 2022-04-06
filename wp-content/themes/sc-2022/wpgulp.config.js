@@ -23,6 +23,7 @@ const injectChanges = true;
 // Path to main .scss file.
 const cssCustomSRC = './assets/css/custom/*.css';
 const cssVendorSRC = './assets/css/vendor/*.css';
+const tailwindSRC = './tailwind.config.js';
 
 // Path to place the compiled CSS file. Default set to root folder.
 const styleDestination = './css/';
@@ -114,6 +115,7 @@ module.exports = {
 	injectChanges,
 	cssCustomSRC,
 	cssVendorSRC,
+	tailwindSRC,
 	styleDestination,
 	outputStyle,
 	errLogToConsole,
@@ -134,5 +136,5 @@ module.exports = {
 	packageName,
 	bugReport,
 	lastTranslator,
-	team
+	team,
 };

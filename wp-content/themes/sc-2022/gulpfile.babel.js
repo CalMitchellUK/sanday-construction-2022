@@ -352,7 +352,8 @@ gulp.task('zip', () => {
 gulp.task(
 	'default',
 	gulp.parallel('customCSS', 'vendorsCSS', 'customJS', 'vendorsJS', 'images', browsersync, () => {
-		gulp.watch(config.watchPhp, reload); // Reload on PHP file changes.
+		gulp.watch(config.tailwindSRC, gulp.series('customCSS', reload))
+		gulp.watch(config.watchPhp, gulp.series('customCSS', reload)); // Reload on PHP file changes.
 		gulp.watch([config.cssCustomSRC, config.cssVendorSRC], gulp.series(gulp.parallel('customCSS', 'vendorsCSS'), reload)); // Reload on STYLES file changes.
 		gulp.watch([config.jsCustomSRC, config.jsVendorSRC], gulp.series(gulp.parallel('customJS', 'vendorsJS'), reload)); // Reload on JS file changes.
 		gulp.watch(config.imgSRC, gulp.series('images', reload)); // Reload on customJS file changes.
