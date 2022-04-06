@@ -22,7 +22,7 @@ const injectChanges = true;
 // >>>>> Style options.
 // Path to main .scss file.
 const cssCustomSRC = './assets/css/custom/*.css';
-const cssVendorSRC = './assets/css/vendor/*.css';
+const cssVendorSRC = './assets/css/vendor/**/*';
 const tailwindSRC = './tailwind.config.js';
 
 // Path to place the compiled CSS file. Default set to root folder.
