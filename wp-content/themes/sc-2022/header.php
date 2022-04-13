@@ -44,23 +44,38 @@ $site_url  = get_bloginfo( 'url' );
 					</div>
 
 					<div class="lg:hidden">
-						<button id="primary-menu-toggle" class="fa-solid fa-bars text-2xl" title="Toggle navigation"></button>
+						<button id="primary-menu-toggle" class="fa fa-bars text-2xl" title="Toggle navigation"></button>
 					</div>
 				</div>
 
-				<?php
-				wp_nav_menu(
-					array(
-						'container_id'    => 'primary-menu',
-						'container_class' => 'mt-4 lg:mt-0 hidden lg:block',
-						'menu_class'      => 'lg:flex',
-						'theme_location'  => 'primary',
-						'li_class'        => 'lg:mr-4 lg:last:mr-0 text-2xl',
-						'anchor_class'    => 'w-full block p-2',
-						'fallback_cb'     => false,
-					)
-				);
-				?>
+				<nav id="primary-menu" class="mt-4 lg:mt-0 hidden lg:flex items-center">
+					<?php
+					wp_nav_menu(
+						array(
+							'container_id'   => 'site-nav',
+							'menu_class'     => 'lg:mr-4 lg:flex items-center',
+							'theme_location' => 'primary',
+							'li_class'       => 'lg:mr-4 lg:last:mr-0',
+							'anchor_class'   => 'px-1 py-0.5 block border-2 border-transparent lg:hover:border-b-white focus:border-b-white text-xl leading-tight transition-colors duration-500',
+						)
+					);
+					?>
+					<ul class="lg:m-2 flex items-center">
+						<li class="mr-2.5 last:mr-0">
+							<a class="w-9 h-9 p-2 block lg:hover:bg-white focus:bg-white lg:hover:text-black focus:text-black text-lg leading-none text-center transition-colors duration-500 fa-brands fa-facebook-f" href="https://www.facebook.com/SANDAYCONSTRUCTION/" target="_blank" title="Follow us on facebook" rel="nofollow"></a>
+						</li>
+						<li class="mr-2.5 last:mr-0">
+							<?php
+							$free_quote = array(
+								'href' => '#free-quote',
+								'text' => 'Get a free quote',
+								'icon' => 'fa fa-file-pen',
+							);
+							echo wp_kses_post( get_sc_cta( $free_quote ) );
+							?>
+						</li>
+					</ul>
+				</nav>
 			</div>
 		</div>
 	</header>

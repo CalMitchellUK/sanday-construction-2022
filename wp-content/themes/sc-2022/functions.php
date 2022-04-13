@@ -138,11 +138,15 @@ add_filter( 'nav_menu_submenu_css_class', 'tailpress_nav_menu_add_submenu_class'
  */
 add_filter(
 	'nav_menu_link_attributes',
-	function( $classes, $item, $args ) {
+	function( $attrs, $item, $args ) {
+		$attrs['class'] = ' ';
 		if ( isset( $args->anchor_class ) ) {
-			$classes['class'] = $args->anchor_class;
+			$attrs['class'] .= $args->anchor_class;
 		}
-		return $classes;
+		if ( in_array( 'current-menu-item', $item->classes, true ) ) {
+			$attrs['class'] .= ' border-b-white';
+		}
+		return $attrs;
 	},
 	1,
 	3
@@ -216,13 +220,46 @@ add_action(
 	}
 );
 
-add_action(
-	'admin_init',
-	function() {
-		global $page ;
-		var_dump( $page  );
-		if ( 'home.php' === get_page_template_slug() ) {
-			remove_post_type_support( 'page', 'editor' );
-		}
+/**
+ * Build a consistent Call-to-action element
+ *
+ * @param Array $opts Contains all the options needed to build the CTA.
+ * @return String Returns HTML.
+ */
+function get_sc_cta( $opts = array() ) {
+	// Options.
+	$href      = isset( $opts['href'] ) ? $opts['href'] : '';
+	$tagname   = $href ? 'a' : 'button';
+	$is_anchor = 'a' === $tagname;
+	$text      = isset( $opts['text'] ) ? $opts['text'] : '';
+	$label     = isset( $opts['title'] ) ? $opts['title'] : $text;
+	$target    = isset( $opts['target'] ) ? $opts['target'] : '_blank';
+	$rel       = isset( $opts['rel'] ) ? $opts['rel'] : 'nofollow noreferrer';
+	$icon      = isset( $opts['icon'] ) ? $opts['icon'] : '';
+	$direction = isset( $opts['icon_position'] ) ? $opts['icon_position'] : 'right';
+	// Text.
+	$text_el = '<span>' . $text . '</span>';
+	// Icon.
+	$icon_classes = ( 'right' === $direction ? 'ml-2 ' : 'mr-2' ) . ' text-md ' . $icon;
+	$icon_el      = $icon && $direction ? '<i class="' . $icon_classes . '"></i>' : '';
+	// Parent.
+	$classes = 'relative px-3.5 py-2.5 flex items-center border-2 border-light rounded-full bg-light lg:hover:bg-transparent focus:bg-transparent text-dark lg:hover:text-light focus:text-light text-lg font-bold leading-none transition-colors duration-500';
+	if ( 'left' === $direction ) {
+		$classes .= ' flex-row-reverse';
 	}
-);
+	$attributes = array(
+		'class'  => $classes,
+		'href'   => $href,
+		'target' => $is_anchor ? $target : '',
+		'rel'    => $is_anchor ? $rel : '',
+		'title'  => $label,
+	);
+	$attr_html  = '';
+	foreach ( $attributes  as $key => $val ) {
+		if ( empty( $val ) ) {
+			continue;
+		}
+		$attr_html .= ' ' . $key . '="' . $val . '"';
+	}
+	return '<' . $tagname . $attr_html . '>' . $text_el . $icon_el . '</' . $tagname . '>';
+}
