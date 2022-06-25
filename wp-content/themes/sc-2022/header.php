@@ -52,9 +52,9 @@ $site_url  = get_bloginfo( 'url' );
 					<?php
 					wp_nav_menu(
 						array(
+							'theme_location' => 'nav',
 							'container_id'   => 'site-nav',
 							'menu_class'     => 'lg:mr-4 lg:flex items-center',
-							'theme_location' => 'primary',
 							'li_class'       => 'lg:mr-4 lg:last:mr-0',
 							'anchor_class'   => 'px-1 py-0.5 block border-2 border-transparent lg:hover:border-b-white focus:border-b-white text-xl leading-tight transition-colors duration-500',
 						)

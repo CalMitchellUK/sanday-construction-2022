@@ -47,6 +47,28 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+#site-footer {
+  ul {
+    li {
+      a {
+        i {
+          &:before{
+            content: "\f054";
+          }
+        }
+
+        &[target=_blank] {
+          i {
+            &:before{
+              content: "\f08e";
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 body.logged-in #site-header {
   @screen md {
     margin-top: 46px;

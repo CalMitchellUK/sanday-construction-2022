@@ -14,7 +14,9 @@ function tailpress_setup() {
 
 	register_nav_menus(
 		array(
-			'primary' => __( 'Primary Menu', 'tailpress' ),
+			'nav'     => __( 'Site navigation', 'tailpress' ),
+			'sitemap' => __( 'Sitemap', 'tailpress' ),
+			'useful'  => __( 'Useful links', 'tailpress' ),
 		)
 	);
 
@@ -134,23 +136,28 @@ function tailpress_nav_menu_add_submenu_class( $classes, $args, $depth ) {
 add_filter( 'nav_menu_submenu_css_class', 'tailpress_nav_menu_add_submenu_class', 10, 3 );
 
 /**
- * Passes anchor classes to nav items.
+ * Adds option 'anchor_class' to 'wp_nav_menu'.
+ *
+ * @param array   $attrs Element Attributes to be built.
+ * @param WP_Term $item Holds the nav menu item arguments.
+ * @param WP_Term $args Holds the nav menu arguments.
+ *
+ * @return array Updated $attrs.
  */
-add_filter(
-	'nav_menu_link_attributes',
-	function( $attrs, $item, $args ) {
-		$attrs['class'] = ' ';
-		if ( isset( $args->anchor_class ) ) {
-			$attrs['class'] .= $args->anchor_class;
-		}
-		if ( in_array( 'current-menu-item', $item->classes, true ) ) {
-			$attrs['class'] .= ' border-b-white';
-		}
-		return $attrs;
-	},
-	1,
-	3
-);
+function cm_nav_menu_link_add_class( $attrs, $item, $args ) {
+	$attrs['class'] = isset( $attrs['class'] ) ? $attrs['class'] : '';
+
+	if ( isset( $args->anchor_class ) ) {
+		$attrs['class'] .= ' ' . $args->anchor_class;
+	}
+
+	if ( in_array( 'current-menu-item', $item->classes, true ) ) {
+		$attrs['class'] .= ' border-b-white';
+	}
+
+	return $attrs;
+}
+add_filter( 'nav_menu_link_attributes', 'cm_nav_menu_link_add_class', 1, 3 );
 
 /**
  * ==============================================
