@@ -1,8 +1,16 @@
+<?php
+/**
+ * Content Loop
+ *
+ * @package sanday
+ * @since 0.0.0
+ */
+
+?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'mb-12' ); ?>>
 
-	<header class="entry-header mb-4">
-		<?php the_title( sprintf( '<h2 class="entry-title text-2xl md:text-3xl leading-tight mb-1"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-		<time datetime="<?php echo get_the_date( 'c' ); ?>" itemprop="datePublished" class="text-sm text-secondary"><?php echo get_the_date(); ?></time>
+	<header class="entry-header mb-10">
+		<?php the_title( sprintf( '<h2 class="entry-title text-2xl md:text-3xl leading-tight"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
 	</header>
 
 	<?php if ( is_search() || is_archive() ) : ?>
@@ -15,13 +23,7 @@
 
 		<div class="entry-content">
 			<?php
-			/* translators: %s: Name of current post */
-			the_content(
-				sprintf(
-					__( 'Continue reading %s', 'tailpress' ),
-					the_title( '<span class="screen-reader-text">"', '"</span>', false )
-				)
-			);
+			the_content();
 
 			wp_link_pages(
 				array(
