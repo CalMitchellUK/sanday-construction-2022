@@ -363,11 +363,11 @@ function get_sc_cta( $opts = array() ) {
  *
  * @return Mixed The contractor dashboard page as Object or false as Boolean.
  */
-function get_contractor_dashboard_page() {
+function get_documents_page() {
 	$dashboard_query = get_pages(
 		array(
 			'meta_key'   => '_wp_page_template',
-			'meta_value' => 'page-contractor.php',
+			'meta_value' => 'page-documents.php',
 			'number'     => 1,
 		),
 	);
@@ -376,12 +376,12 @@ function get_contractor_dashboard_page() {
 
 /**
  * Get the permalink of the Contractor Dashboard page
- * Uses get_contractor_dashboard_page() to extract a permalink.
+ * Uses get_documents_page() to extract a permalink.
  *
  * @return Mixed Returns the permalink as a String or false Boolean
  */
-function get_contractor_dashboard_permalink() {
-	$page = get_contractor_dashboard_page();
+function get_documents_permalink() {
+	$page = get_documents_page();
 	return isset( $page ) ? get_permalink( $page ) : false;
 }
 
@@ -396,7 +396,7 @@ function get_contractor_dashboard_permalink() {
 function redirect_contractors( $redirect_to, $request, $user ) {
 	if ( isset( $user->roles ) && is_array( $user->roles ) ) {
 		$is_subscriber = in_array( 'subscriber', $user->roles, true );
-		$cd_permalink  = $is_subscriber ? get_contractor_dashboard_permalink() : false;
+		$cd_permalink  = $is_subscriber ? get_documents_permalink() : false;
 		if ( $cd_permalink ) {
 			return $cd_permalink;
 		} else {

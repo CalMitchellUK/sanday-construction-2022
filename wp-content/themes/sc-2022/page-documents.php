@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Contractor Dashboard
+ * Template Name: Your Documents
  *
  * @package sanday
  * @since 0.0.0
