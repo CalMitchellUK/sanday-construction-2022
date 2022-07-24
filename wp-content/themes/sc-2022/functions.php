@@ -391,3 +391,14 @@ function redirect_contractors( $redirect_to, $request, $user ) {
 	}
 }
 add_filter( 'login_redirect', 'redirect_contractors', 10, 3 );
+
+/**
+ * Get a subfield from ACF with validation
+ *
+ * @param Array  $item A repeater row.
+ * @param String $key  The field slug.
+ * @return Mixed Can be anything.
+ */
+function sc_acf_subfield( $item = array(), $key = '' ) {
+	return $key && isset( $item[ $key ] ) ? $item[ $key ] : false;
+}
