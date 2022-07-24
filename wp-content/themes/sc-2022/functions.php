@@ -394,7 +394,6 @@ function get_contractor_dashboard_permalink() {
  * @return String The Contractor Dashboard page, home URL, or redirect link.
  */
 function redirect_contractors( $redirect_to, $request, $user ) {
-	global $user;
 	if ( isset( $user->roles ) && is_array( $user->roles ) ) {
 		$is_subscriber = in_array( 'subscriber', $user->roles, true );
 		$cd_permalink  = $is_subscriber ? get_contractor_dashboard_permalink() : false;
@@ -465,10 +464,12 @@ function get_contractor_field( $item = array(), $key = '' ) {
  * Loop through users to check for expired.
  */
 function cs_update_exired_docs() {
+	// Only dashboard.
 	global $pagenow;
 	if ( 'index.php' !== $pagenow ) {
 		return;
 	}
+	// Start.
 	$today   = gmdate( 'Ymd' );
 	$expired = array();
 	$soon    = array();
@@ -504,7 +505,15 @@ function cs_update_exired_docs() {
 			}
 		}
 	}
-
+	// Not contractors.
+	global $current_user;
+	if ( isset( $current_user->roles ) && is_array( $current_user->roles ) ) {
+		$is_subscriber = in_array( 'subscriber', $current_user->roles, true );
+		if ( $is_subscriber ) {
+			return;
+		}
+	}
+	// Display notices.
 	if ( count( $expired ) || count( $soon ) ) {
 		add_action(
 			'admin_notices',
