@@ -158,6 +158,23 @@ function tailpress_asset( $path ) {
 }
 
 /**
+ * Add custom ACF options pages.
+ */
+function sc_add_custom_options_pages() {
+	acf_add_options_page(
+		array(
+			'menu_slug'  => 'contact-info',
+			'page_title' => __( 'Contact Info' ),
+			'post_id'    => 'contact-info',
+			'capability' => 'edit_posts',
+			'icon_url'   => 'dashicons-phone',
+			'position'   => 80,
+		)
+	);
+}
+add_action( 'acf/init', 'sc_add_custom_options_pages' );
+
+/**
  * Adds option 'li_class' to 'wp_nav_menu'.
  *
  * @param string  $classes String of classes.
@@ -309,7 +326,7 @@ function get_sc_cta( $opts = array() ) {
 	$is_anchor = 'a' === $tagname;
 	$text      = isset( $opts['text'] ) ? $opts['text'] : '';
 	$label     = isset( $opts['title'] ) ? $opts['title'] : $text;
-	$target    = isset( $opts['target'] ) ? $opts['target'] : '_blank';
+	$target    = isset( $opts['target'] ) ? $opts['target'] : '';
 	$rel       = isset( $opts['rel'] ) ? $opts['rel'] : 'nofollow noreferrer';
 	$icon      = isset( $opts['icon'] ) ? $opts['icon'] : '';
 	$direction = isset( $opts['icon_position'] ) ? $opts['icon_position'] : 'right';

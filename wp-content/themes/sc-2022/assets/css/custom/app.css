@@ -11,6 +11,10 @@ h1, h2, h3, h4, h5, h6 {
   @apply font-serif font-bold;
 }
 
+address {
+  @apply not-italic;
+}
+
 .container {
   @apply max-w-full mx-auto;
 
@@ -78,3 +82,38 @@ body.logged-in #site-header {
     margin-top: 32px;
   }
 }
+
+#contact-form {
+  .field {
+    @apply mb-4;
+
+    label {
+      @apply mb-3 inline-flex text-lg font-serif font-bold leading-none;
+    }
+
+    .field-input {
+      @apply w-full px-2 py-1 border-2 border-gray-400 rounded-md bg-white/5 text-light;
+    }
+
+    textarea {
+      max-height: 155px;
+    }
+  }
+
+  .btn-container {
+    @apply flex items-center;
+
+    #submit-btn {
+      @apply px-3.5 py-2.5 flex border-2 border-light rounded-full bg-light lg:hover:bg-transparent focus:bg-transparent text-dark text-lg font-bold leading-none cursor-pointer transition-colors duration-500 lg:hover:text-light focus:text-light;
+    }
+
+    .wpcf7-spinner {
+      @apply block bg-white/10 opacity-100;
+
+      &:before {
+        @apply bg-white;
+      }
+    }
+  }
+}
+

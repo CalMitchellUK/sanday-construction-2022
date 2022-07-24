@@ -59,22 +59,14 @@ $site_url  = get_bloginfo( 'url' );
 							'anchor_class'   => 'px-1 py-0.5 block border-2 border-transparent lg:hover:border-b-white focus:border-b-white text-xl leading-tight transition-colors duration-500',
 						)
 					);
+
+					// Social Media.
+					get_template_part( 'template-parts/social-media-links' );
+
+					// CTAs.
+					get_template_part( 'template-parts/main-ctas' );
+
 					?>
-					<ul class="lg:m-2 flex items-center">
-						<li class="mr-2.5 last:mr-0">
-							<a class="w-9 h-9 p-2 block lg:hover:bg-white focus:bg-white lg:hover:text-black focus:text-black text-lg leading-none text-center transition-colors duration-500 fa-brands fa-facebook-f" href="https://www.facebook.com/SANDAYCONSTRUCTION/" target="_blank" title="Follow us on facebook" rel="nofollow"></a>
-						</li>
-						<li class="mr-2.5 last:mr-0">
-							<?php
-							$free_quote = array(
-								'href' => '#free-quote',
-								'text' => 'Get a free quote',
-								'icon' => 'fa fa-file-pen',
-							);
-							echo wp_kses_post( get_sc_cta( $free_quote ) );
-							?>
-						</li>
-					</ul>
 				</nav>
 			</div>
 		</div>
