@@ -446,7 +446,7 @@ function get_contractor_field( $item = array(), $key = '' ) {
 		return false;
 	}
 	$is_existing = sc_acf_subfield( $item, 'select_exisiting' );
-	$post_keys   = array( 'document_type', 'description', 'file', 'title' );
+	$post_keys   = array( 'document_type', 'description', 'files', 'title' );
 	$is_post_key = in_array( $key, $post_keys, true );
 	$document    = $is_existing ? sc_acf_subfield( $item, 'document' ) : false;
 	if ( $is_post_key && $document ) {
@@ -460,3 +460,81 @@ function get_contractor_field( $item = array(), $key = '' ) {
 		return sc_acf_subfield( $item, $key );
 	}
 }
+
+/**
+ * Loop through users to check for expired.
+ */
+function cs_update_exired_docs() {
+	global $pagenow;
+	if ( 'index.php' !== $pagenow ) {
+		return;
+	}
+	$today   = gmdate( 'Ymd' );
+	$expired = array();
+	$soon    = array();
+	foreach ( get_users() as $user ) {
+		$data    = $user->data;
+		$user_id = $data->ID;
+		if ( have_rows( 'docs', 'user_' . $user_id ) ) {
+			while ( have_rows( 'docs', 'user_' . $user_id ) ) {
+				the_row();
+				$is_existing = get_sub_field( 'select_exisiting' );
+				$document    = $is_existing ? get_sub_field( 'document' ) : false;
+				$doc_title   = $document ? get_the_title( $document ) : get_sub_field( 'title' );
+				$doc_status  = get_sub_field( 'status' );
+				$expiry_date = get_sub_field( 'expiry_date' );
+				if ( empty( $expiry_date ) ) {
+					continue;
+				}
+				$exp_dt      = strtotime( $expiry_date );
+				$exp_text    = gmdate( 'd/m/Y', $exp_dt );
+				$notice_text = $data->display_name . ': ' . $doc_title . ' - <strong>' . $exp_text . '</strong>';
+				if ( $today > $expiry_date ) {
+					array_push( $expired, $notice_text );
+					// Update to expired, if not already.
+					if ( 'expired' !== $doc_status['value'] ) {
+						update_sub_field( 'status', 'expired' );
+					}
+				} else {
+					$month_ahead = gmdate( 'Ymd', strtotime( '-1 months', strtotime( $expiry_date ) ) );
+					if ( $today > $month_ahead ) {
+						array_push( $soon, $notice_text );
+					}
+				}
+			}
+		}
+	}
+
+	if ( count( $expired ) || count( $soon ) ) {
+		add_action(
+			'admin_notices',
+			function() use ( $expired, $soon ) {
+				if ( count( $expired ) ) {
+					echo '<div id="docs-expired" class="notice notice-error">';
+					echo '<p>The following documents <strong>have expired</strong>:</p>';
+					echo '<ul>';
+					foreach ( $expired as $notice ) {
+						echo '<li>';
+						echo wp_kses_post( $notice );
+						echo '</li>';
+					}
+					echo '</ul>';
+					echo '</div>';
+				}
+				if ( count( $soon ) ) {
+					echo '<div id="docs-expiring" class="notice notice-info">';
+					echo '<p>The following documents will expire within the next month:</p>';
+					echo '<ul>';
+					foreach ( $soon as $notice ) {
+						echo '<li>';
+						echo wp_kses_post( $notice );
+						echo '</li>';
+					}
+					echo '</ul>';
+					echo '</div>';
+				}
+			}
+		);
+	}
+}
+add_filter( 'init', 'cs_update_exired_docs' );
