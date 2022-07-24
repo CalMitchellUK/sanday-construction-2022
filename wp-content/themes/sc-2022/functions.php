@@ -559,3 +559,13 @@ function filter_acf_relationship( $args ) {
 	return $args;
 }
 add_filter( 'acf/fields/relationship/query', 'filter_acf_relationship', 10, 3 );
+
+/**
+ * Override default dashboard content.
+ */
+function sc_dashboard_widgets() {
+	global $wp_meta_boxes;
+	unset( $wp_meta_boxes['dashboard']['side'] );
+	unset( $wp_meta_boxes['dashboard']['normal'] );
+}
+add_action( 'wp_dashboard_setup', 'sc_dashboard_widgets' );

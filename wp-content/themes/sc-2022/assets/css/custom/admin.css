@@ -1,8 +1,15 @@
+/* User fields */
 tr.user-rich-editing-wrap,
 tr.user-syntax-highlighting-wrap,
 tr.user-admin-color-wrap,
 tr.user-comment-shortcuts-wrap,
 tr.user-admin-bar-front-wrap,
 tr.user-url-wrap,
-.application-passwords
-{ display: none; }
+.application-passwords {
+  display: none;
+}
+
+/* Dashboard columns to full-width */
+#dashboard-widgets .postbox-container {
+  width: 100% !important;
+}
