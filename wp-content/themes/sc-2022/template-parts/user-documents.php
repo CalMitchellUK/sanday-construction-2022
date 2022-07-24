@@ -171,7 +171,7 @@ foreach ( $categories as $slug => $category ) {
 		echo wp_kses_post( $item['description'] );
 
 		// Files.
-		$files = sc_acf_subfield( $item, 'files');
+		$files = sc_acf_subfield( $item, 'files' );
 		if ( $files && count( $files ) ) {
 			echo '<div class="w-1/3 flex-shrink-0">';
 			echo '<label class="mb-1 px-2 block text-sm font-bold">Files</label>';
