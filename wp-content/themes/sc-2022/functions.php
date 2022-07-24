@@ -419,3 +419,44 @@ add_filter( 'login_redirect', 'redirect_contractors', 10, 3 );
 function sc_acf_subfield( $item = array(), $key = '' ) {
 	return $key && isset( $item[ $key ] ) ? $item[ $key ] : false;
 }
+
+/**
+ * Convert date into d/m/Y format
+ *
+ * @param String $date_string  The field slug.
+ * @return Mixed Can be anything.
+ */
+function sc_get_date( $date_string = '' ) {
+	if ( empty( $date_string ) ) {
+		return '';
+	}
+	$string = strtotime( $date_string );
+	return gmdate( 'd/m/Y', $string );
+}
+
+/**
+ * Figure out if the User's Document attachment is a Document or just files and notes.
+ *
+ * @param Array  $item A repeater row.
+ * @param String $key  The field slug.
+ * @return Mixed Can be anything.
+ */
+function get_contractor_field( $item = array(), $key = '' ) {
+	if ( ! $key ) {
+		return false;
+	}
+	$is_existing = sc_acf_subfield( $item, 'select_exisiting' );
+	$post_keys   = array( 'document_type', 'description', 'file', 'title' );
+	$is_post_key = in_array( $key, $post_keys, true );
+	$document    = $is_existing ? sc_acf_subfield( $item, 'document' ) : false;
+	if ( $is_post_key && $document ) {
+		// Not ACF.
+		if ( 'title' === $key ) {
+			return get_the_title( $document );
+		}
+		// ACF fields.
+		return get_field( $key, $document );
+	} else {
+		return sc_acf_subfield( $item, $key );
+	}
+}

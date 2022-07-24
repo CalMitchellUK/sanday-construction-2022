@@ -6,33 +6,6 @@
  * @since 0.0.0
  */
 
-/**
- * Figure out if the User's Document attachment is a Document or just files and notes.
- *
- * @param Array  $item A repeater row.
- * @param String $key  The field slug.
- * @return Mixed Can be anything.
- */
-function get_contractor_field( $item = array(), $key = '' ) {
-	if ( ! $key ) {
-		return false;
-	}
-	$is_existing = sc_acf_subfield( $item, 'select_exisiting' );
-	$post_keys   = array( 'document_type', 'description', 'file', 'title' );
-	$is_post_key = in_array( $key, $post_keys, true );
-	$document    = $is_existing ? sc_acf_subfield( $item, 'document' ) : false;
-	if ( $is_post_key && $document ) {
-		// Not ACF.
-		if ( 'title' === $key ) {
-			return get_the_title( $document );
-		}
-		// ACF fields.
-		return get_field( $key, $document );
-	} else {
-		return sc_acf_subfield( $item, $key );
-	}
-}
-
 // Vars.
 $border_colors = array(
 	'to-do'      => 'border-l-sky-600',
@@ -169,14 +142,15 @@ foreach ( $categories as $slug => $category ) {
 		echo '<div class="w-2/3 px-2 flex-shrink-0">';
 		echo '<label class="mb-1 block text-sm font-bold">Description / Instructions</label>';
 		echo wp_kses_post( $item['description'] );
+		echo '</div>';
 
 		// Files.
 		$files = sc_acf_subfield( $item, 'files' );
 		if ( $files && count( $files ) ) {
 			echo '<div class="w-1/3 flex-shrink-0">';
 			echo '<label class="mb-1 px-2 block text-sm font-bold">Files</label>';
-			foreach ( $files as $item ) {
-				$file = sc_acf_subfield( $item, 'file' );
+			foreach ( $files as $file_row ) {
+				$file = sc_acf_subfield( $file_row, 'file' );
 				if ( ! $file ) {
 					continue;
 				}
@@ -225,7 +199,7 @@ foreach ( $categories as $slug => $category ) {
 		if ( $item['due_date'] ) {
 			echo '<div class="w-1/3 px-2 flex-shrink-0">';
 			echo '<label class="mb-1 block text-sm font-bold">Due Date</label>';
-			echo '<p>' . esc_html( $item['due_date'] ) . '</p>';
+			echo '<p>' . esc_html( sc_get_date( $item['due_date'] ) ) . '</p>';
 			echo '</div>';
 		}
 
@@ -233,7 +207,7 @@ foreach ( $categories as $slug => $category ) {
 		if ( $item['expiry_date'] ) {
 			echo '<div class="w-1/3 px-2 flex-shrink-0">';
 			echo '<label class="mb-1 block text-sm font-bold">Expiry date</label>';
-			echo '<p>' . esc_html( $item['expiry_date'] ) . '</p>';
+			echo '<p>' . esc_html( sc_get_date( $item['expiry_date'] ) ) . '</p>';
 			echo '</div>';
 		}
 
