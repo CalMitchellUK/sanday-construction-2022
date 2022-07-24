@@ -117,7 +117,7 @@ add_action( 'after_setup_theme', 'tailpress_setup' );
 function tailpress_enqueue_assets() {
 	$theme = wp_get_theme();
 	// Google fonts.
-	wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@400;500;700&display=swap', array(), $theme->get( 'Version' ) );
+	wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Kadwa&family=Roboto:wght@400;500;700&display=swap', array(), $theme->get( 'Version' ) );
 
 	// Tailpress.
 	wp_enqueue_style( 'theme', tailpress_asset( 'css/app.css' ), array(), $theme->get( 'Version' ) );

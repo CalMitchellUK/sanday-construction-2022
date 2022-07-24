@@ -19,7 +19,7 @@ $main_text = get_field( 'main_text' );
 
 			<div class="bg-light text-dark p-8 drop-shadow">
 
-				<h1 class="text-5xl 2xl:text-6xl"><?php echo esc_html( $main_text ); ?></h1>
+				<h1 class="text-3xl xl:text-5xl 2xl:text-6xl"><?php echo esc_html( $main_text ); ?></h1>
 
 			</div>
 
@@ -49,7 +49,7 @@ $main_text = get_field( 'main_text' );
 					<div class="grow flex flex-col bg-light text-dark">
 						<img class="block" src="<?php echo esc_url( $img_src ); ?>" width="1280" height="720" alt="<?php echo esc_attr( $img_alt ); ?>">
 						<div class="p-2.5 xl:p-5 flex flex-col grow">
-							<h2 class="mb-3 text-lg"><?php echo esc_html( $card_title ); ?></h2>
+							<h2 class="mb-3 text-lg xl:text-2xl"><?php echo esc_html( $card_title ); ?></h2>
 							<p class=""><?php echo wp_kses_post( $card_text ); ?></p>
 						</div>
 					</div>

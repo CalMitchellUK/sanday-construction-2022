@@ -8,7 +8,7 @@
 
 /* App Styles */
 h1, h2, h3, h4, h5, h6 {
-  @apply font-serif font-bold;
+  @apply font-serif;
 }
 
 address {
@@ -88,7 +88,7 @@ body.logged-in #site-header {
     @apply mb-4;
 
     label {
-      @apply mb-3 inline-flex text-lg font-serif font-bold leading-none;
+      @apply mb-3 inline-flex text-lg font-serif leading-none;
     }
 
     .field-input {
