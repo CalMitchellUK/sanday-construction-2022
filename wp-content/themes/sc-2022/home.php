@@ -27,9 +27,9 @@ $main_text = get_field( 'main_text' );
 	</div>
 	<!--  -->
 
-		<!-- Key Information -->
-	<div class="container relative mb-10 px-0">
-		<div class="md:flex">
+	<!-- Key Information -->
+	<div class="container relative px-0 py-8 xl:py-10">
+		<div class="mb-10 md:flex">
 			<?php
 			$ki_arr  = get_field( 'key_information' ) ?? array();
 			$ki_col1 = $ki_arr['column_1'] ?? array();

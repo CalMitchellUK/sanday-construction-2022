@@ -10,7 +10,7 @@ get_header();
 
 ?>
 
-<div class="container my-8 px-2.5 xl:px-5">
+<div class="container px-2.5 xl:px-5 py-8 xl:py-12">
 
 	<?php if ( have_posts() ) : ?>
 		<?php

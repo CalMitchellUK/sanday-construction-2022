@@ -86,12 +86,12 @@ if ( have_rows( 'docs', 'user_' . $user_id ) ) {
 	}
 }
 
-echo '<h2 class="mb-6 text-4xl">Your Documents</h2>';
+echo '<h2 class="mb-6 text-xl lg:text-4xl">Your Documents</h2>';
 
 // Actionable alert.
 if ( count( $actionables ) ) {
 	echo '<div class="mb-10 px-4 py-5 border-4 border-amber-600 rounded-lg bg-amber-50 text-dark overflow-hidden">';
-	echo '<h2 class="mb-4">The following documents require your attention:</h2>';
+	echo '<h3 class="mb-4">The following documents require your attention:</h3>';
 	echo '<ul class="pl-6 block list-disc">';
 	foreach ( $actionables as $item ) {
 		$cat_title = $categories[ $item['doc_type'] ]['name'] ?? '';

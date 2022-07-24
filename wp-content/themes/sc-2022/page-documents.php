@@ -13,12 +13,12 @@ $logged_in  = is_user_logged_in();
 
 get_header();
 
-echo '<div class="container px-2.5 py-12 xl:px-5">';
+echo '<div class="container px-2.5 xl:px-5 py-8 xl:py-12">';
 
 echo '<article id="' . esc_attr( $sc_id ) . '" class="' . esc_attr( $sc_classes ) . '">';
 
 echo '<header class="entry-header mb-10">';
-the_title( '<h1 class="entry-title text-2xl lg:text-5xl leading-tight">', '</h1>' );
+the_title( '<h1 class="entry-title text-2xl lg:text-5xl">', '</h1>' );
 echo '</header>';
 
 if ( $logged_in ) {
