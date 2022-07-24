@@ -82,6 +82,7 @@ foreach ( $docs as $item ) {
 	$doc_type    = get_contractor_field( $item, 'document_type' ) ?? 'others';
 	$description = get_contractor_field( $item, 'description' );
 	$file        = get_contractor_field( $item, 'file' );
+	$files       = get_contractor_field( $item, 'files' );
 	$doc_status  = get_contractor_field( $item, 'status' );
 	$notes       = get_contractor_field( $item, 'notes' );
 	$due_date    = get_contractor_field( $item, 'due_date' );
@@ -92,6 +93,7 @@ foreach ( $docs as $item ) {
 		'doc_title'   => $doc_title,
 		'description' => $description,
 		'file'        => $file,
+		'files'       => $files,
 		'doc_status'  => $doc_status,
 		'notes'       => $notes,
 		'due_date'    => $due_date,
@@ -167,24 +169,29 @@ foreach ( $categories as $slug => $category ) {
 		echo '<div class="w-2/3 px-2 flex-shrink-0">';
 		echo '<label class="mb-1 block text-sm font-bold">Description / Instructions</label>';
 		echo wp_kses_post( $item['description'] );
-		echo '</div>';
 
-		// File.
-		$file = $item['file'];
-		if ( $file ) {
-			$filename  = $file['filename'];
-			$file_url  = $file['url'];
-			$file_icon = $file['icon'];
-			$filesize  = size_format( $file['filesize'] );
+		// Files.
+		$files = sc_acf_subfield( $item, 'files');
+		if ( $files && count( $files ) ) {
 			echo '<div class="w-1/3 flex-shrink-0">';
-			echo '<label class="mb-1 px-2 block text-sm font-bold">File</label>';
-			echo '<a href="' . esc_url( $file_url ) . '" target="_blank" rel="nofollow" title="Open &quot;' . esc_attr( $filename ) . '&quot;" class="px-2 py-1 flex items-start text-sm hover:bg-light hover:text-dark transition-colors duration-500">';
-			echo '<img class="mr-3" src="' . esc_url( $file_icon ) . '" width="36" alt>';
-			echo '<div clas="flex-shrink-0">';
-			echo '<p class="font-bold">' . esc_html( $filename ) . '</p>';
-			echo '<p class="text-xs">' . esc_html( $filesize ) . '</p>';
-			echo '</div>';
-			echo '</a>';
+			echo '<label class="mb-1 px-2 block text-sm font-bold">Files</label>';
+			foreach ( $files as $item ) {
+				$file = sc_acf_subfield( $item, 'file' );
+				if ( ! $file ) {
+					continue;
+				}
+				$filename  = $file['filename'];
+				$file_url  = $file['url'];
+				$file_icon = $file['icon'];
+				$filesize  = size_format( $file['filesize'] );
+				echo '<a class="mb-1 last:mb-0 px-2 py-1 flex items-start text-sm hover:bg-light hover:text-dark transition-colors duration-500" href="' . esc_url( $file_url ) . '" target="_blank" rel="nofollow" title="Open &quot;' . esc_attr( $filename ) . '&quot;">';
+				echo '<img class="mr-3" src="' . esc_url( $file_icon ) . '" width="36" alt>';
+				echo '<div clas="flex-shrink-0">';
+				echo '<p class="font-bold">' . esc_html( $filename ) . '</p>';
+				echo '<p class="text-xs">' . esc_html( $filesize ) . '</p>';
+				echo '</div>';
+				echo '</a>';
+			}
 			echo '</div>';
 		}
 
