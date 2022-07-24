@@ -1,13 +1,13 @@
 <?php
 /**
- * Documents loop for Contractor Dashboard
+ * Documents loop for Uesr Dashboard
  *
  * @package sanday
  * @since 0.0.0
  */
 
 /**
- * Figure out if the Contractor Document attachment is a Document or just files and notes.
+ * Figure out if the User's Document attachment is a Document or just files and notes.
  *
  * @param Array  $item A repeater row.
  * @param String $key  The field slug.

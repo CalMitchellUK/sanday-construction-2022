@@ -28,7 +28,7 @@ if ( $logged_in ) {
 	echo '</div>';
 
 	// Documents.
-	get_template_part( 'template-parts/contractor-documents' );
+	get_template_part( 'template-parts/user-documents' );
 
 } else {
 	// The content.
