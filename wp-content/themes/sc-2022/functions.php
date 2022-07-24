@@ -7,6 +7,74 @@
  */
 
 /**
+ * Adds the Document post-type
+ */
+function add_document_post_type() {
+	$args = array(
+		'label'               => 'Document',
+		'labels'              => array(
+			'name'                  => 'Documents',
+			'singular_name'         => 'Document',
+			'menu_name'             => 'Documents',
+			'name_admin_bar'        => 'Document',
+			'archives'              => 'Document Archives',
+			'attributes'            => 'Document Attributes',
+			'parent_item_colon'     => 'Parent Document',
+			'all_items'             => 'All Documents',
+			'add_new_item'          => 'Add New Document',
+			'add_new'               => 'Add Document',
+			'new_item'              => 'New Document',
+			'edit_item'             => 'Edit Document',
+			'update_item'           => 'Update Document',
+			'view_item'             => 'View Document',
+			'view_items'            => 'View Documents',
+			'search_items'          => 'Search document post',
+			'not_found'             => 'Not found',
+			'not_found_in_trash'    => 'Not found in bin',
+			'featured_image'        => 'Thumbnail',
+			'set_featured_image'    => 'Set thumbnail',
+			'remove_featured_image' => 'Remove thumbnail',
+			'use_featured_image'    => 'Use as thumbnail',
+			'insert_into_item'      => 'Insert into document post',
+			'uploaded_to_this_item' => 'Uploaded to this document post',
+			'items_list'            => 'Documents list',
+			'items_list_navigation' => 'Documents list navigation',
+			'filter_items_list'     => 'Filter documents list',
+		),
+		'supports'            => array( 'title' ),
+		'hierarchical'        => false,
+		'public'              => false,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'menu_position'       => 20,
+		'menu_icon'           => 'dashicons-media-document',
+		'show_in_admin_bar'   => true,
+		'show_in_nav_menus'   => true,
+		'can_export'          => true,
+		'has_archive'         => true,
+		'exclude_from_search' => true,
+		'publicly_queryable'  => false,
+		'capability_type'     => 'page',
+	);
+	register_post_type( 'document', $args );
+}
+add_action( 'init', 'add_document_post_type', 0 );
+
+/**
+ * Renames Subscriber to Contractor.
+ */
+function rename_subscribers_to_contractors() {
+	global $wp_roles;
+	if ( isset( $wp_roles ) ) {
+		$wp_roles->roles['subscriber']['name'] = 'Contractor';
+		$wp_roles->role_names['subscriber']    = 'Contractor';
+	}
+}
+add_action( 'init', 'rename_subscribers_to_contractors' );
+
+add_filter( 'wp_is_application_passwords_available', '__return_false' );
+
+/**
  * Theme setup.
  */
 function tailpress_setup() {
@@ -70,6 +138,7 @@ add_action( 'wp_enqueue_scripts', 'tailpress_enqueue_assets' );
  */
 function enqueue_admin_assets() {
 	$theme = wp_get_theme();
+	wp_enqueue_style( 'theme', tailpress_asset( 'css/admin.css' ), array(), $theme->get( 'Version' ) );
 	wp_enqueue_script( 'admin', tailpress_asset( 'js/admin.js' ), array(), $theme->get( 'Version' ), true );
 }
 add_action( 'admin_enqueue_scripts', 'enqueue_admin_assets' );
@@ -270,3 +339,55 @@ function get_sc_cta( $opts = array() ) {
 	}
 	return '<' . $tagname . $attr_html . '>' . $text_el . $icon_el . '</' . $tagname . '>';
 }
+
+/**
+ * Get the Contractor Dashboard page
+ * Uses the page template to return the first page using the template.
+ *
+ * @return Mixed The contractor dashboard page as Object or false as Boolean.
+ */
+function get_contractor_dashboard_page() {
+	$dashboard_query = get_pages(
+		array(
+			'meta_key'   => '_wp_page_template',
+			'meta_value' => 'page-contractor.php',
+			'number'     => 1,
+		),
+	);
+	return count( $dashboard_query ) ? $dashboard_query[0] : false;
+}
+
+/**
+ * Get the permalink of the Contractor Dashboard page
+ * Uses get_contractor_dashboard_page() to extract a permalink.
+ *
+ * @return Mixed Returns the permalink as a String or false Boolean
+ */
+function get_contractor_dashboard_permalink() {
+	$page = get_contractor_dashboard_page();
+	return isset( $page ) ? get_permalink( $page ) : false;
+}
+
+/**
+ * Get the Subscribers/Contractors to the Contractor Dashboard page.
+ *
+ * @param  String $redirect_to The redirect destination URL.
+ * @param  String $request The requested redirect destination URL passed as a parameter.
+ * @param  Mixed  $user (WP_User|WP_Error) WP_User object if login was successful, WP_Error object otherwise.
+ * @return String The Contractor Dashboard page, home URL, or redirect link.
+ */
+function redirect_contractors( $redirect_to, $request, $user ) {
+	global $user;
+	if ( isset( $user->roles ) && is_array( $user->roles ) ) {
+		$is_subscriber = in_array( 'subscriber', $user->roles, true );
+		$cd_permalink  = $is_subscriber ? get_contractor_dashboard_permalink() : false;
+		if ( $cd_permalink ) {
+			return $cd_permalink;
+		} else {
+			return home_url();
+		}
+	} else {
+		return $redirect_to;
+	}
+}
+add_filter( 'login_redirect', 'redirect_contractors', 10, 3 );
