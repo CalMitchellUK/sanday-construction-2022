@@ -39,8 +39,10 @@ module.exports = {
 				'site-logo': '186px',
 			},
 			maxHeight: {
-				'40vh': '40vh',
-				'75vh': '75vh'
+				'15vh': '15vh',
+				'25vh': '25vh',
+				'30vh': '30vh',
+				'50vh': '50vh',
 			},
 			padding: {
 				'video': '56.25%'

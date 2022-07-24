@@ -83,19 +83,8 @@ $site_url  = get_bloginfo( 'url' );
 	<div id="content" class="site-content flex-grow">
 
 		<?php
-		$banner_image = get_field( 'banner_image' );
-		if ( $banner_image ) {
-			?>
-			<div id="page-banner-image" class="relative w-full max-h-40vh md:max-h-75vh overflow-hidden">
-				<div class="relative w-full pb-video"></div>
-				<?php echo wp_get_attachment_image( $banner_image, 'banner-image', null, array( 'class' => 'absolute left-0 top-0 w-full h-full object-cover' ) ); ?>
-			</div>
-			<?php
-		} else {
-			?>
-			<div id="site-header-buffer" class="relative w-full hidden md:block"></div>
-			<?php
-		}
+		// Banner.
+		get_template_part( 'template-parts/banner' );
 		?>
 
 		<main>
