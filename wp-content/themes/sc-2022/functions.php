@@ -547,3 +547,15 @@ function cs_update_exired_docs() {
 	}
 }
 add_filter( 'init', 'cs_update_exired_docs' );
+
+/**
+ * Only show published posts in relationship fields.
+ *
+ * @param Array $args Array of query arguments.
+ * @return Array Returns updated query arguments.
+ */
+function filter_acf_relationship( $args ) {
+	$args['post_status'] = 'publish';
+	return $args;
+}
+add_filter( 'acf/fields/relationship/query', 'filter_acf_relationship', 10, 3 );
