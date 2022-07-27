@@ -51,15 +51,15 @@ if ( have_rows( 'docs', 'user_' . $user_id ) ) {
 	$i1 = 1;
 	foreach ( get_field( 'docs', 'user_' . $user_id ) as $item ) {
 		// Item.
-		$doc_title   = get_contractor_field( $item, 'title' );
-		$doc_type    = get_contractor_field( $item, 'document_type' ) ?? 'others';
-		$description = get_contractor_field( $item, 'description' );
-		$file        = get_contractor_field( $item, 'file' );
-		$files       = get_contractor_field( $item, 'files' );
-		$doc_status  = get_contractor_field( $item, 'status' );
-		$notes       = get_contractor_field( $item, 'notes' );
-		$due_date    = get_contractor_field( $item, 'due_date' );
-		$expiry_date = get_contractor_field( $item, 'expiry_date' );
+		$doc_title   = get_document_row_field( $item, 'title' );
+		$doc_type    = get_document_row_field( $item, 'document_type' ) ?? 'others';
+		$description = get_document_row_field( $item, 'description' );
+		$file        = get_document_row_field( $item, 'file' );
+		$files       = get_document_row_field( $item, 'files' );
+		$doc_status  = get_document_row_field( $item, 'status' );
+		$notes       = get_document_row_field( $item, 'notes' );
+		$due_date    = get_document_row_field( $item, 'due_date' );
+		$expiry_date = get_document_row_field( $item, 'expiry_date' );
 		$item        = array(
 			'id'          => $i1,
 			'doc_type'    => $doc_type,

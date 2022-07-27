@@ -61,16 +61,15 @@ function add_document_post_type() {
 add_action( 'init', 'add_document_post_type', 0 );
 
 /**
- * Renames Subscriber to Contractor.
+ * Removes the default user roles that WP uses, added new ones from User Role Editor.
  */
-function rename_subscribers_to_contractors() {
-	global $wp_roles;
-	if ( isset( $wp_roles ) ) {
-		$wp_roles->roles['subscriber']['name'] = 'Contractor';
-		$wp_roles->role_names['subscriber']    = 'Contractor';
-	}
+function sc_remove_unused_roles() {
+	remove_role( 'author' );
+	remove_role( 'editor' );
+	remove_role( 'contributor' );
+	remove_role( 'subscriber' );
 }
-add_action( 'init', 'rename_subscribers_to_contractors' );
+add_action( 'init', 'sc_remove_unused_roles' );
 
 add_filter( 'wp_is_application_passwords_available', '__return_false' );
 
@@ -358,10 +357,10 @@ function get_sc_cta( $opts = array() ) {
 }
 
 /**
- * Get the Contractor Dashboard page
+ * Get the Documents Dashboard page
  * Uses the page template to return the first page using the template.
  *
- * @return Mixed The contractor dashboard page as Object or false as Boolean.
+ * @return Mixed The Documents Dashboard page as Object or false as Boolean.
  */
 function get_documents_page() {
 	$dashboard_query = get_pages(
@@ -375,38 +374,23 @@ function get_documents_page() {
 }
 
 /**
- * Get the permalink of the Contractor Dashboard page
- * Uses get_documents_page() to extract a permalink.
- *
- * @return Mixed Returns the permalink as a String or false Boolean
- */
-function get_documents_permalink() {
-	$page = get_documents_page();
-	return isset( $page ) ? get_permalink( $page ) : false;
-}
-
-/**
- * Get the Subscribers/Contractors to the Contractor Dashboard page.
+ * Get the Employees/Contractors to the Documents Dashboard page.
  *
  * @param  String $redirect_to The redirect destination URL.
  * @param  String $request The requested redirect destination URL passed as a parameter.
  * @param  Mixed  $user (WP_User|WP_Error) WP_User object if login was successful, WP_Error object otherwise.
- * @return String The Contractor Dashboard page, home URL, or redirect link.
+ * @return String The Documents Dashboard page, home URL, or redirect link.
  */
-function redirect_contractors( $redirect_to, $request, $user ) {
-	if ( isset( $user->roles ) && is_array( $user->roles ) ) {
-		$is_subscriber = in_array( 'subscriber', $user->roles, true );
-		$cd_permalink  = $is_subscriber ? get_documents_permalink() : false;
-		if ( $cd_permalink ) {
-			return $cd_permalink;
-		} else {
-			return home_url();
-		}
+function sc_login_redirect( $redirect_to, $request, $user ) {
+	if ( isset( $user->roles ) && is_array( $user->roles ) && ! user_can( $user, 'redirect_to_dashboard' ) ) {
+		$page = get_documents_page();
+		return isset( $page ) ? get_permalink( $page ) : false;
 	} else {
 		return $redirect_to;
 	}
 }
-add_filter( 'login_redirect', 'redirect_contractors', 10, 3 );
+add_filter( 'login_redirect', 'sc_login_redirect', 10, 3 );
+
 
 /**
  * Get a subfield from ACF with validation
@@ -434,13 +418,13 @@ function sc_get_date( $date_string = '' ) {
 }
 
 /**
- * Figure out if the User's Document attachment is a Document or just files and notes.
+ * Figure out if the document attachment is a Document post-type or just files and notes fields.
  *
  * @param Array  $item A repeater row.
  * @param String $key  The field slug.
  * @return Mixed Can be anything.
  */
-function get_contractor_field( $item = array(), $key = '' ) {
+function get_document_row_field( $item = array(), $key = '' ) {
 	if ( ! $key ) {
 		return false;
 	}
@@ -505,13 +489,9 @@ function cs_update_exired_docs() {
 			}
 		}
 	}
-	// Not contractors.
-	global $current_user;
-	if ( isset( $current_user->roles ) && is_array( $current_user->roles ) ) {
-		$is_subscriber = in_array( 'subscriber', $current_user->roles, true );
-		if ( $is_subscriber ) {
-			return;
-		}
+	// Not Employees/Contractors.
+	if ( ! current_user_can( 'edit_users' ) ) {
+		return;
 	}
 	// Display notices.
 	if ( count( $expired ) || count( $soon ) ) {
@@ -593,6 +573,10 @@ function sc_dashboard_widgets() {
 	global $wp_meta_boxes;
 	unset( $wp_meta_boxes['dashboard']['side'] );
 	unset( $wp_meta_boxes['dashboard']['normal'] );
+	// Not Employees/Contractors.
+	if ( ! current_user_can( 'edit_users' ) ) {
+		return;
+	}
 
 	wp_add_dashboard_widget(
 		'staff-overview',
