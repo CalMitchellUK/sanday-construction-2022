@@ -21,11 +21,11 @@ echo '<div class="container relative px-2.5 xl:px-5">';
 echo '</div>';
 
 // Key Information.
+$ki_arr  = get_field( 'key_information' ) ?? array();
 $ki_col1 = $ki_arr['column_1'] ?? array();
 $ki_col2 = $ki_arr['column_2'] ?? array();
 $ki_col3 = $ki_arr['column_3'] ?? array();
 $ki_cols = array( $ki_col1, $ki_col2, $ki_col3 );
-$ki_arr  = get_field( 'key_information' ) ?? array();
 echo '<div class="container relative px-0 py-8 xl:py-10">';
 	echo '<div class="mb-10 md:flex">';
 foreach ( $ki_cols as $ki_col ) {
