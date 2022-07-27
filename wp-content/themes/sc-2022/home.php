@@ -45,7 +45,6 @@ foreach ( $ki_cols as $ki_col ) {
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
-	echo '<?php';
 }
 echo '</div>';
 echo '</div>';
