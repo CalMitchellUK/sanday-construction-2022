@@ -13,3 +13,90 @@ tr.user-url-wrap,
 #dashboard-widgets .postbox-container {
   width: 100% !important;
 }
+
+.bg-to-do { background: #0284c7; }
+.bg-processing { background: #f59e0b; }
+.bg-up-to-date { background: #16a34a; }
+.bg-expired { background: #dc2626; }
+.bg-other { background: #374151; }
+
+#staff-overview {
+  #staff-overview-container {
+    width:100%;
+    max-width: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 14px;
+  }
+
+  table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+
+    td, th {
+      padding: 0.5rem;
+      border: 1px solid #444;
+
+      &.keyed {
+        div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .blip {
+            width: 12px;
+            height: 12px;
+            margin-right: 8px;
+            display: block;
+            border-radius: 100%;
+          }
+
+          .text {
+          }
+        }
+      }
+    }
+
+    th {
+    }
+
+    td {
+      text-align: left;
+
+      &.center {
+        text-align: center;
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      ul {margin: 0;}
+      li {
+        margin: 0;
+        padding: 0.2142857142857143rem 0;
+        border-bottom: 1px solid #999;
+
+        &:last-of-type {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    thead,
+    tfoot {
+      background-color: #ddd;
+    }
+
+    tbody {
+      tr {
+        &:nth-of-type(even) {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+  }
+}

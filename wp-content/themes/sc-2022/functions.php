@@ -561,11 +561,142 @@ function filter_acf_relationship( $args ) {
 add_filter( 'acf/fields/relationship/query', 'filter_acf_relationship', 10, 3 );
 
 /**
+ * Build the columns for the Staff Overview Dashboard Widget.
+ *
+ * @param Boolean $foot Are you currently rendering the table head or foot.
+ * @param Boolean $admin Can the current user edit other users.
+ * @return String Returns the HTML of the columns.
+ */
+function sc_get_user_dashboard_cols( $foot = false, $admin = false ) {
+	$row1  = '<th colspan="5">Documents</th>';
+	$row2  = '<th class="keyed"><div><span class="blip bg-to-do"></span><span class="text">To-do</span></div></th>';
+	$row2 .= '<th class="keyed"><div><span class="blip bg-processing"></span><span class="text">Processing</span></div></th>';
+	$row2 .= '<th class="keyed"><div><span class="blip bg-up-to-date"></span><span class="text">Up-tp-date</span></div></th>';
+	$row2 .= '<th class="keyed"><div><span class="blip bg-expired"></span><span class="text">Expired</span></div></th>';
+	$row2 .= '<th class="keyed"><div><span class="blip bg-other"></span><span class="text">Other</span></div></th>';
+
+	$html  = '<tr>';
+	$html .= '<th rowspan="2">Display Name</th>';
+	$html .= $admin ? '<th rowspan="2">Controls<br><small>(Admins only)</small></th>' : '';
+	$html .= $foot ? $row2 : $row1;
+	$html .= '</tr>';
+	$html .= '<tr>';
+	$html .= $foot ? $row1 : $row2;
+	$html .= '</tr>';
+	return $html;
+}
+
+/**
  * Override default dashboard content.
  */
 function sc_dashboard_widgets() {
 	global $wp_meta_boxes;
 	unset( $wp_meta_boxes['dashboard']['side'] );
 	unset( $wp_meta_boxes['dashboard']['normal'] );
+
+	wp_add_dashboard_widget(
+		'staff-overview',
+		'Staff Overview of Users',
+		function() {
+			$all_users      = get_users();
+			$today          = gmdate( 'Ymd' );
+			$can_edit_users = current_user_can( 'edit_users' );
+
+			echo '<div id="staff-overview-container">';
+			echo '<table>';
+
+			echo '<thead>' . wp_kses_post( sc_get_user_dashboard_cols( false, $can_edit_users ) ) . '</thead>';
+
+			echo '<tbody>';
+			foreach ( $all_users as $user ) {
+				$data         = $user->data;
+				$user_id      = $data->ID;
+				$display_name = $data->display_name;
+
+				// Assign documents to columns.
+				$list_todo       = array();
+				$list_processing = array();
+				$list_uptodate   = array();
+				$list_expired    = array();
+				$list_other      = array();
+				while ( have_rows( 'docs', 'user_' . $user_id ) ) {
+					the_row();
+					$is_existing = get_sub_field( 'select_exisiting' );
+					$document    = $is_existing ? get_sub_field( 'document' ) : false;
+					$doc_title   = $document ? get_the_title( $document ) : get_sub_field( 'title' );
+					$doc_status  = get_sub_field( 'status' );
+					$status      = $doc_status && $doc_status['value'] ? $doc_status['value'] : 'other';
+					switch ( $status ) {
+						case 'to-do':
+							array_push( $list_todo, $doc_title );
+							break;
+						case 'processing':
+							array_push( $list_processing, $doc_title );
+							break;
+						case 'up-to-date':
+							array_push( $list_uptodate, $doc_title );
+							break;
+						case 'expired':
+							array_push( $list_expired, $doc_title );
+							break;
+						default:
+							array_push( $list_other, $doc_title );
+							break;
+					}
+				}
+
+				// Build column data.
+				$doc_cols = array(
+					array( $list_todo, 'to-do' ),
+					array( $list_processing, 'processing' ),
+					array( $list_uptodate, 'up-to-date' ),
+					array( $list_expired, 'expired' ),
+					array( $list_other, 'other' ),
+				);
+
+				// Start.
+				echo '<tr>';
+
+				// Name.
+				echo '<td>';
+				echo '<h3>' . esc_html( $display_name ) . '</h3>';
+				echo '</td>';
+
+				// Controls.
+				if ( $can_edit_users ) {
+					echo '<td class="center">';
+					echo '<a class="button button-primary" href="' . esc_url( admin_url( 'user-edit.php?user_id=' . $user_id ) ) . '">Go to user profile</a>';
+					echo '</td>';
+				}
+
+				// Document cols.
+				array_walk(
+					$doc_cols,
+					function( $col ) {
+						$list = $col[0];
+						$slug = $col[1];
+
+						echo '<td>';
+						if ( count( $list ) ) {
+							echo '<ul>';
+							foreach ( $list as $doc_title ) {
+								echo '<li>' . esc_html( $doc_title ) . '</li>';
+							}
+							echo '</ul>';
+						}
+						echo '</td>';
+
+					}
+				);
+
+				echo '</tr>';
+			}
+			echo '</tbody>';
+
+			echo '<tfoot>' . wp_kses_post( sc_get_user_dashboard_cols( true, $can_edit_users ) ) . '</tfoot>';
+
+			echo '</table>';
+		}
+	);
 }
 add_action( 'wp_dashboard_setup', 'sc_dashboard_widgets' );
