@@ -1,65 +1,53 @@
 /* Tailwind */
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 /* Editor Styles */
 body {
-  @apply font-sans;
+  @apply m-4 font-sans;
 }
 
-.wp-block {
-  @apply max-w-screen-xl;
+h1,
+h2,
+h3 {
+  @apply font-serif;
 }
 
-.wp-block[data-align=wide] {
-  @apply max-w-screen-xl;
+h1 {
+  @apply my-8 first:mt-0 last:mb-0 text-2xl lg:text-5xl;
 }
 
-.wp-block[data-align=full] {
-  @apply max-w-full;
+h2 {
+  @apply mt-6 first:mt-0 mb-5 last:mb-0 text-xl lg:text-4xl;
 }
 
-article > *:not(.entry-content),
-.entry-content > * {
-  @apply mx-auto max-w-full;
+h3 {
+  @apply mt-4 first:mt-0 mb-3 last:mb-0 text-lg lg:text-2xl;
 }
 
-.entry-content,
-.block-editor-block-list__layout {
-  h1 {
-    @apply text-2xl;
+p,
+ul,
+ol,
+blockquote {
+  @apply my-3 first:mt-0 last:mb-0;
+}
+
+ul,
+ol {
+  @apply pl-5 list-outside;
+
+  li {
+    @apply my-2 first:mt-0 last:mb-0;
   }
+}
 
-  h2 {
-    @apply text-xl;
-  }
+ul {
+  @apply list-disc;
+}
 
-  h3 {
-    @apply text-lg;
-  }
+ol {
+  @apply list-decimal;
+}
 
-  p, ul, ol {
-    a {
-      @apply text-blue-500 underline;
-
-      &:hover {
-        @apply no-underline;
-      }
-    }
-
-    @apply mb-8;
-  }
-
-  ul:not(.block-editor-block-variation-picker__variations) {
-    li {
-      @apply list-disc list-inside;
-    }
-  }
-
-  ol {
-    li {
-      @apply list-decimal list-inside;
-    }
-  }
+a {
+  @apply font-bold underline focus:no-underline lg:hover:no-underline;
 }

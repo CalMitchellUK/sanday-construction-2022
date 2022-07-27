@@ -10,7 +10,7 @@ get_header();
 
 ?>
 
-<div class="container mb-10 xl:mb-16 px-2.5 xl:px-5">
+<div class="container mb-10 xl:mb-16 px-2.5 xl:px-5 pt-8 xl:pt-10">
 
 	<?php
 	if ( have_posts() ) {
@@ -25,7 +25,7 @@ get_header();
 					<?php the_title( sprintf( '<h2 class="entry-title text-xl lg:text-4xl"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
 				</header>
 
-				<div class="entry-summary tiny-mce">
+				<div class="entry-summary tinymce">
 					<?php the_excerpt(); ?>
 				</div>
 
@@ -35,7 +35,7 @@ get_header();
 					<?php the_title( '<h1 class="entry-title text-2xl lg:text-5xl">', '</h1>' ); ?>
 				</header>
 
-				<div class="entry-content tiny-mce">
+				<div class="entry-content tinymce">
 					<?php
 					the_content();
 					?>

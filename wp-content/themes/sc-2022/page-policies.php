@@ -24,7 +24,7 @@ get_header();
 					<?php the_title( '<h1 class="entry-title text-2xl lg:text-5xl leading-tight">', '</h1>' ); ?>
 				</header>
 
-				<div class="entry-content tiny-mce xl:w-3/4">
+				<div class="entry-content tinymce xl:w-3/4">
 					<?php the_content(); ?>
 				</div>
 

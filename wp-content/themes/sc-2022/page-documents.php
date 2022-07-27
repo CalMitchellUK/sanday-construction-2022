@@ -23,7 +23,7 @@ echo '</header>';
 
 if ( $logged_in ) {
 	// The content.
-	echo '<div class="entry-content tiny-mce xl:w-10/12 mb-14">';
+	echo '<div class="entry-content tinymce xl:w-10/12 mb-14">';
 	the_content();
 	echo '</div>';
 
@@ -32,7 +32,7 @@ if ( $logged_in ) {
 
 } else {
 	// The content.
-	echo '<div class="entry-content tiny-mce">';
+	echo '<div class="entry-content tinymce">';
 	echo '<p>You are not logged in. <a class="underline" href="' . esc_url( wp_login_url() ) . '" rel="nofollow" title="Go to login page">You can log in here</a></p>';
 	echo '</div>';
 }

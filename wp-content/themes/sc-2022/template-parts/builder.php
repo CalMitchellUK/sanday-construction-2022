@@ -38,7 +38,7 @@ function sc_build_column__text( $col ) {
 	$has_btn        = sc_acf_subfield( $col, 'has_button' );
 	$btn_html       = $has_btn ? sc_get_cta_options( sc_acf_subfield( $col, 'button' ) ) : '';
 	echo '<div class="flex flex-col justify-center ' . esc_attr( $align_classes ) . '">';
-	echo '<div class="tiny-mce mb-4 xl:mb-6 last:mb-0">' . wp_kses_post( sc_acf_subfield( $col, 'body' ) ) . '</div>';
+	echo '<div class="tinymce mb-4 xl:mb-6 last:mb-0">' . wp_kses_post( sc_acf_subfield( $col, 'body' ) ) . '</div>';
 	echo wp_kses_post( $btn_html );
 	echo '</div>';
 }

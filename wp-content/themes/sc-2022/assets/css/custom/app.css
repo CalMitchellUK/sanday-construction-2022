@@ -80,6 +80,48 @@ body.logged-in #site-header {
   }
 }
 
+.tinymce {
+  h1 {
+    @apply my-10 first:mt-0 last:mb-0 text-2xl lg:text-5xl;
+  }
+
+  h2 {
+    @apply mt-8 first:mt-0 mb-5 last:mb-0 text-xl lg:text-4xl;
+  }
+
+  h3 {
+    @apply mt-5 first:mt-0 mb-3 last:mb-0 text-lg lg:text-2xl;
+  }
+
+  p,
+  ul,
+  ol,
+  blockquote {
+    @apply my-3 first:mt-0 last:mb-0;
+  }
+
+  ul,
+  ol {
+    @apply pl-5 list-outside;
+
+    li {
+      @apply my-2 first:mt-0 last:mb-0;
+    }
+  }
+
+  ul {
+    @apply list-disc;
+  }
+
+  ol {
+    @apply list-decimal;
+  }
+
+  a {
+    @apply  underline focus:no-underline lg:hover:no-underline;
+  }
+}
+
 #contact-form {
   .field {
     @apply mb-4;
