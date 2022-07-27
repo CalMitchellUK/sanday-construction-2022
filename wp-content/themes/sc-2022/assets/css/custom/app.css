@@ -118,7 +118,7 @@ body.logged-in #site-header {
   }
 
   a {
-    @apply  underline focus:no-underline lg:hover:no-underline;
+    @apply font-bold underline focus:no-underline lg:hover:no-underline;
   }
 }
 
