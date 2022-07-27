@@ -119,14 +119,14 @@ function tailpress_enqueue_assets() {
 	wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Kadwa&family=Roboto:wght@400;500;700&display=swap', array(), $theme->get( 'Version' ) );
 
 	// Tailpress.
-	wp_enqueue_style( 'theme', tailpress_asset( 'css/app.css' ), array(), $theme->get( 'Version' ) );
-	wp_enqueue_script( 'tailpress', tailpress_asset( 'js/app.js' ), array(), $theme->get( 'Version' ), true );
+	wp_enqueue_style( 'theme', tailpress_asset( 'css/app.css' ), array( 'slick' ), $theme->get( 'Version' ) );
+	wp_enqueue_script( 'tailpress', tailpress_asset( 'js/app.js' ), array( 'jquery', 'slick' ), $theme->get( 'Version' ), true );
 
 	// Font Awsome.
 	wp_enqueue_style( 'fontawesome', get_stylesheet_directory_uri() . '/css/fontawesome/css/all.min.css', array(), '6.1.1' );
 
 	// Slick.
-	wp_enqueue_style( 'slick', get_stylesheet_directory_uri() . '/css/slick.min.css', array(), '1.0.1' );
+	wp_enqueue_style( 'slick', '//cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/slick.min.css', array(), '1.0.1' );
 	wp_enqueue_style( 'accessible-slick-theme', '//cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/accessible-slick-theme.min.css', array(), '1.0.1' );
 	wp_enqueue_script( 'slick', '//cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/slick.min.js', array( 'jquery' ), $theme->get( 'Version' ), true );
 }
@@ -313,12 +313,39 @@ add_action(
 );
 
 /**
+ * Get CTA data from Button Fields.
+ *
+ * @param Array $cta Array of CTA settings.
+ * @return String HTML of the CTA button.
+ */
+function sc_get_cta_options( $cta = array() ) {
+	$cta_type   = sc_acf_subfield( $cta, 'type' );
+	$url        = sc_acf_subfield( $cta, 'url' );
+	$target     = '_blank';
+	$icon_class = 'fa fa-external-link';
+	if ( 'internal' === $cta_type ) {
+		$url        = sc_acf_subfield( $cta, 'page' );
+		$icon_class = 'fa fa-chevron-right';
+		$target     = '';
+	}
+	return sc_get_cta_html(
+		array(
+			'href'   => $url,
+			'text'   => sc_acf_subfield( $cta, 'text' ),
+			'title'  => sc_acf_subfield( $cta, 'label' ),
+			'target' => $target,
+			'icon'   => $icon_class,
+		)
+	);
+}
+
+/**
  * Build a consistent Call-to-action element
  *
  * @param Array $opts Contains all the options needed to build the CTA.
  * @return String Returns HTML.
  */
-function get_sc_cta( $opts = array() ) {
+function sc_get_cta_html( $opts = array() ) {
 	// Options.
 	$href      = isset( $opts['href'] ) ? $opts['href'] : '';
 	$tagname   = $href ? 'a' : 'button';

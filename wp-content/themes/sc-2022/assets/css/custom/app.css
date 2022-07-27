@@ -114,3 +114,29 @@ body.logged-in #site-header {
   }
 }
 
+.slick-slider.slick-gallery {
+  @apply relative z-0 mb-0;
+
+  .slick-prev,
+  .slick-next {
+    border-style: solid;
+    margin-top: -10px; /* Offsets caption */
+    @apply w-9 h-9 z-10 flex justify-center items-center border-2 border-light rounded-full bg-light lg:hover:bg-dark focus:bg-transparent text-dark lg:hover:text-light focus:text-light text-base leading-none transition-colors duration-500;
+  }
+
+  .slick-prev {
+    left: 4px;
+  }
+
+  .slick-next {
+    right: 4px;
+  }
+
+  .slick-track {
+    @apply flex items-center;
+
+    .slick-slide {
+      @apply flex flex-col justify-center items-center;
+    }
+  }
+}

@@ -10,7 +10,7 @@ get_header();
 
 ?>
 
-<div class="container px-2.5 xl:px-5 py-8 xl:py-12">
+<div class="container mb-10 xl:mb-16 px-2.5 xl:px-5 pt-8 xl:pt-12">
 
 	<?php if ( have_posts() ) : ?>
 		<?php
@@ -18,13 +18,13 @@ get_header();
 			the_post();
 			?>
 
-			<article id="post-<?php the_ID(); ?>" <?php post_class( 'mb-12' ); ?>>
+			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 				<header class="entry-header mb-10">
 					<?php the_title( '<h1 class="entry-title text-2xl lg:text-5xl leading-tight">', '</h1>' ); ?>
 				</header>
 
-				<div class="entry-content xl:w-3/4">
+				<div class="entry-content tiny-mce xl:w-3/4">
 					<?php the_content(); ?>
 				</div>
 

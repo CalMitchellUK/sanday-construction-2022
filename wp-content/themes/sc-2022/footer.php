@@ -26,7 +26,7 @@ $anchor_class    = 'inline-flex items-center focus:underline lg:hover:underline'
 
 <?php do_action( 'tailpress_content_after' ); ?>
 
-<footer id="site-footer" class="py-12 bg-black" role="contentinfo">
+<footer id="site-footer" class="mt-12 xl:mt-16 py-12 bg-black" role="contentinfo">
 	<?php do_action( 'tailpress_footer' ); ?>
 
 	<div class="container flex flex-wrap text-center md:text-left">

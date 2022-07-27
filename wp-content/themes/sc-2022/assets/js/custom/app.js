@@ -1,4 +1,4 @@
-(() => {
+(($) => {
   // Vars
   const $siteHeader = qs('#site-header')
   const $mobileToggle = qs('#primary-menu-toggle')
@@ -18,6 +18,11 @@
     handleWindowResize()
 
     $mobileToggle.addEventListener('click', toggleMobileMenu)
+
+    $('.slick-gallery').slick({
+      prevArrow: `<button type="button" class="slick-prev fa fa-chevron-left" aria-label="Previous"></button>`,
+      nextArrow: `<button type="button" class="slick-next fa fa-chevron-right" aria-label="Next"></button>`
+    })
   }
 
   // Actions
@@ -49,4 +54,4 @@
     const $qsa = document.querySelectorAll(selector)
     return [...$qsa]
   }
-})()
+})(jQuery)
