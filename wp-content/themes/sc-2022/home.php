@@ -11,23 +11,23 @@ get_header();
 
 $main_text = get_field( 'main_text' );
 
-	// Main Text.
-	echo '<div class="container relative px-2.5 xl:px-5">';
-		echo '<div class="half-height-offset w-full xl:w-3/4 mb-10">';
-			echo '<div class="bg-light text-dark p-8 drop-shadow">';
-				echo '<h1 class="text-3xl xl:text-5xl 2xl:text-6xl"><?php echo esc_html( $main_text ); ?></h1>';
-			echo '</div>';
+// Main Text.
+echo '<div class="container relative px-2.5 xl:px-5">';
+	echo '<div class="half-height-offset w-full xl:w-3/4 mb-10">';
+		echo '<div class="bg-light text-dark p-8 drop-shadow">';
+			echo '<h1 class="text-3xl xl:text-5xl 2xl:text-6xl">' . esc_html( $main_text ) . '</h1>';
 		echo '</div>';
 	echo '</div>';
+echo '</div>';
 
-	// Key Information.
-	echo '<div class="container relative px-0 py-8 xl:py-10">';
-		echo '<div class="mb-10 md:flex">';
-			$ki_arr  = get_field( 'key_information' ) ?? array();
-			$ki_col1 = $ki_arr['column_1'] ?? array();
-			$ki_col2 = $ki_arr['column_2'] ?? array();
-			$ki_col3 = $ki_arr['column_3'] ?? array();
-			$ki_cols = array( $ki_col1, $ki_col2, $ki_col3 );
+// Key Information.
+$ki_col1 = $ki_arr['column_1'] ?? array();
+$ki_col2 = $ki_arr['column_2'] ?? array();
+$ki_col3 = $ki_arr['column_3'] ?? array();
+$ki_cols = array( $ki_col1, $ki_col2, $ki_col3 );
+echo '<div class="container relative px-0 py-8 xl:py-10">';
+	echo '<div class="mb-10 md:flex">';
+	$ki_arr  = get_field( 'key_information' ) ?? array();
 foreach ( $ki_cols as $ki_col ) {
 	// Image.
 	$img     = isset( $ki_col['image'] ) ? $ki_col['image'] : array();
@@ -47,8 +47,7 @@ foreach ( $ki_cols as $ki_col ) {
 	echo '</div>';
 	echo '<?php';
 }
-		echo '</div>';
-
 	echo '</div>';
+echo '</div>';
 
 get_footer();
