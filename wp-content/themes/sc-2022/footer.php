@@ -18,7 +18,7 @@ $useful_nav       = get_term( $all_navs[ $useful_id ], 'nav_menu' );
 $useful_nav_count = $useful_nav->count;
 $useful_nav_name  = $useful_nav->name;
 // Column info.
-$h2_classes      = 'mb-4 text-xl xl:text-2xl';
+$h2_classes      = 'mb-4 text-2xl';
 $container_class = 'mb-4 last:mb-0';
 $menu_class      = '';
 $li_class        = 'mb-2 last:mb-0';
@@ -36,8 +36,8 @@ $anchor_class    = 'inline-flex items-center focus:underline lg:hover:underline'
 <footer id="site-footer" class="mt-12 xl:mt-16 py-12 bg-black" role="contentinfo">
 	<?php do_action( 'tailpress_footer' ); ?>
 
-	<div class="container flex flex-wrap text-center md:text-left">
-		<div class="w-full md:w-1/4 mb-3 md:mb-0 px-2.5 xl:px-5">
+	<div class="container mb-7 flex flex-wrap text-center md:text-left">
+		<div class="w-full md:w-1/3 lg:w-1/4 mb-7 last:mb-0 md:mb-0 px-2.5 xl:px-5">
 			<?php
 			if ( $sitemap_nav_count ) {
 				echo '<h2 class="' . esc_attr( $h2_classes ) . '">' . esc_html( $sitemap_nav_name ) . '</h2>';
@@ -53,14 +53,11 @@ $anchor_class    = 'inline-flex items-center focus:underline lg:hover:underline'
 				);
 			}
 			?>
-			<div class="mb-4 md:mb-0 flex justify-center md:justify-start">
-				<img src="<?php echo esc_attr( get_stylesheet_directory_uri() ); ?>/img/sanday-construction-ident-white.png" width="80" height="68" alt="<?php echo esc_attr( $site_name ); ?> ident">
-			</div>
 		</div>
 
 		<?php
 		if ( $useful_nav_count ) {
-			echo '<div class="w-full md:w-1/4 mb-3 md:mb-0 px-2.5 xl:px-5">';
+			echo '<div class="w-full md:w-1/3 lg:w-1/4 mb-7 last:mb-0 md:mb-0 px-2.5 xl:px-5">';
 			echo '<h2 class="' . esc_attr( $h2_classes ) . '">' . esc_html( $useful_nav_name ) . '</h2>';
 			wp_nav_menu(
 				array(
@@ -75,6 +72,21 @@ $anchor_class    = 'inline-flex items-center focus:underline lg:hover:underline'
 			echo '</div>';
 		}
 		?>
+
+		<div class="w-full md:w-auto md:ml-auto px-2.5 xl:px-5 flex justify-center md:self-end text-center md:text-right">
+			<?php
+			// Social Media.
+			get_template_part( 'template-parts/social-media-links' );
+			?>
+		</div>
+	</div>
+
+	<div class="container flex flex-wrap text-center md:text-left">
+		<div class="w-full md:w-auto mb-3 md:mb-0 px-2.5 xl:px-5">
+			<div class="mb-4 md:mb-0 flex justify-center md:justify-start">
+				<img src="<?php echo esc_attr( get_stylesheet_directory_uri() ); ?>/img/sanday-construction-ident-white.png" width="80" height="68" alt="<?php echo esc_attr( $site_name ); ?> ident">
+			</div>
+		</div>
 
 		<div class="w-full md:w-auto md:ml-auto px-2.5 xl:px-5 md:self-end text-center md:text-right">
 			&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> - <?php echo esc_html( get_bloginfo( 'name' ) ); ?>
