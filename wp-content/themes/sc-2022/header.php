@@ -6,8 +6,9 @@
  * @since 0.0.0
  */
 
-$site_name = get_bloginfo( 'name' );
-$site_url  = get_bloginfo( 'url' );
+$site_name      = get_bloginfo( 'name' );
+$site_url       = get_bloginfo( 'url' );
+$stylesheet_uri = get_stylesheet_directory_uri();
 
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -18,6 +19,18 @@ $site_url  = get_bloginfo( 'url' );
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( $stylesheet_uri ); ?>/img/meta/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( $stylesheet_uri ); ?>/img/meta/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="<?php echo esc_url( $stylesheet_uri ); ?>/img/meta/favicon-16x16.png">
+	<link rel="manifest" href="<?php echo esc_url( $stylesheet_uri ); ?>/img/meta/site.webmanifest">
+	<link rel="mask-icon" href="<?php echo esc_url( $stylesheet_uri ); ?>/img/meta/safari-pinned-tab.svg" color="#5bbad5">
+	<link rel="shortcut icon" href="<?php echo esc_url( $stylesheet_uri ); ?>/img/meta/favicon.ico">
+	<meta name="apple-mobile-web-app-title" content="Sanday Construction Ltd.">
+	<meta name="application-name" content="Sanday Construction Ltd.">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="msapplication-config" content="<?php echo esc_url( $stylesheet_uri ); ?>/img/meta/browserconfig.xml">
+	<meta name="theme-color" content="#1d1e1b">
 
 	<?php wp_head(); ?>
 </head>
