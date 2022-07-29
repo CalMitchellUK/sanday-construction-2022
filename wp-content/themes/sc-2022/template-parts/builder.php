@@ -6,13 +6,17 @@
  * @since 0.0.0
  */
 
+/**
+ * Builder Column - Echo wrapper and then the column-type.
+ *
+ * @param Array $col Build row column.
+ */
 function sc_build_columns( $col ) {
 	$col_width    = $col['column_width'] ? $col['column_width'] : '1/1';
 	$which_layout = $col['acf_fc_layout'];
 	if ( $which_layout ) {
 
 		echo '<div class="col w-full lg:w-' . esc_attr( $col_width ) . ' mb-6 lg:mb-0 last:mb-0 px-2.5 xl:px-5">';
-		/* echo '<pre style="max-height: 400px;">' . var_export( $col, true ) . '</pre>'; */
 		switch ( $which_layout ) {
 			case 'text_block':
 				sc_build_column__text( $col );
@@ -28,6 +32,11 @@ function sc_build_columns( $col ) {
 	}
 }
 
+/**
+ * Builder Column - Text - Echo content-type Text.
+ *
+ * @param Array $col Build row column.
+ */
 function sc_build_column__text( $col ) {
 	$alignment      = sc_acf_subfield( $col, 'text_alignment' );
 	$is_ca          = 'center' === $alignment;
@@ -43,6 +52,11 @@ function sc_build_column__text( $col ) {
 	echo '</div>';
 }
 
+/**
+ * Builder Column - Gallery - Echo content-type Gallery.
+ *
+ * @param Array $col Build row column.
+ */
 function sc_build_column__gallery( $col ) {
 	// Unique ID is needed for slick.
 	$show_captions = sc_acf_subfield( $col, 'show_captions' );
@@ -68,6 +82,11 @@ function sc_build_column__gallery( $col ) {
 	echo '</div>';
 }
 
+/**
+ * Builder Column - Image - Echo content-type Image.
+ *
+ * @param Array $col Build row column.
+ */
 function sc_build_column__image( $col ) {
 	$show_caption = sc_acf_subfield( $col, 'show_caption' );
 	$image_sizes  = sc_acf_subfield( $col, 'image_sizes' );
@@ -87,7 +106,7 @@ if ( have_rows( 'rows' ) ) {
 	echo '<div class="container relative mb-10 xl:mb-16 flex flex-col">';
 	while ( have_rows( 'rows' ) ) {
 		the_row();
-		echo '<div class="row w-full mb-8 xl:mb-10 last:mb-0 flex flex-wrap">';
+		echo '<div class="row w-full mb-8 xl:mb-10 last:mb-0 flex flex-wrap items-center">';
 		array_walk( get_sub_field( 'cols' ), 'sc_build_columns' );
 		echo '</div>';
 	}
