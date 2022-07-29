@@ -42,7 +42,7 @@
 
   function toggleMobileMenu(e) {
     e.preventDefault();
-    $mainNav.classList.toggle('hidden')
+    $mainNav.classList.toggle('toggled-hidden')
   }
 
   // Utils

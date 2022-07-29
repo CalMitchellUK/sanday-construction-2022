@@ -46,6 +46,15 @@ address {
   }
 }
 
+.toggled-hidden {
+  @media (min-width: 1025px) {
+    margin-top: 32px;
+  }
+  @media (max-width: 1024px) {
+    display: none !important;
+  }
+}
+
 #site-footer {
   ul {
     li {

@@ -237,7 +237,7 @@ function cm_nav_menu_link_add_class( $attrs, $item, $args ) {
 	}
 
 	if ( in_array( 'current-menu-item', $item->classes, true ) ) {
-		$attrs['class'] .= ' lg:border-b-white bg-white/5 lg:bg-transparent';
+		$attrs['class'] .= ' border-b-white';
 	}
 
 	return $attrs;
@@ -862,5 +862,51 @@ function sc_build_file_rows( $items = array(), $full_list = false ) {
 		}
 
 		echo '</li>';
+	}
+}
+
+/**
+ * Social Media Links
+ *
+ * @param Boolean $is_footer Whether this is being called in the header or footer.
+ */
+function sc_build_social_media_links( $is_footer = false ) {
+	$sm_links      = get_field( 'social_media_links', 'contact-info' ) ?? array();
+	$sm_classes    = array(
+		'facebook'  => 'fa-brands fa-facebook-f',
+		'twitter'   => 'fa-brands fa-twitter',
+		'instagram' => 'fa-brands fa-instagram',
+		'youtube'   => 'fa-brands fa-youtube',
+		'other'     => 'fa fa-external-link',
+	);
+	$display_class = $is_footer ? 'flex' : 'hidden lg:flex';
+
+	if ( count( $sm_links ) ) {
+		echo '<ul class="mb-2 lg:mb-0 last:mb-0 lg:mr-4 lg:last:mr-0 ' . esc_attr( $display_class ) . ' items-center">';
+		foreach ( $sm_links as $sm_link ) {
+			$sm_type    = sc_acf_subfield( $sm_link, 'type' );
+			$url        = sc_acf_subfield( $sm_link, 'url' );
+			$label      = sc_acf_subfield( $sm_link, 'label' );
+			$icon_class = $sm_classes[ $sm_type ];
+			echo '<li class="mr-2.5 last:mr-0">';
+			echo '<a class="w-9 h-9 p-2 block lg:hover:bg-white focus:bg-white lg:hover:text-black focus:text-black text-lg leading-none text-center transition-colors duration-500 ' . esc_attr( $icon_class ) . '" href="' . esc_url( $url ) . '" target="_blank" title="' . esc_attr( $label ) . '" rel="nofollow"></a>';
+			echo '</li>';
+		}
+		echo '</ul>';
+	}
+}
+
+/**
+ * Main Calls to action Loop
+ */
+function sc_build_ctas() {
+	$main_ctas = get_field( 'main_ctas', 'contact-info' ) ?? array();
+	if ( count( $main_ctas ) ) {
+		echo '<ul class="mb-2 lg:mb-0 last:mb-0 lg:mr-4 lg:last:mr-0 flex items-center">';
+		foreach ( $main_ctas as $cta ) {
+			$cta_html = sc_get_cta_options( $cta );
+			echo '<li class="mr-2.5 last:mr-0">' . wp_kses_post( $cta_html ) . '</li>';
+		}
+		echo '</ul>';
 	}
 }

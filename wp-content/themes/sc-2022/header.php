@@ -35,8 +35,9 @@ $site_url  = get_bloginfo( 'url' );
 		<div class="gradient absolute inset-0 hidden lg:block transition-opacity duration-200"></div>
 
 		<div class="container relative px-2.5 xl:px-5">
-			<div class="lg:flex justify-between items-center pt-1 pb-4">
-				<div class="flex justify-between items-center">
+			<div class="flex flex-col lg:flex-row justify-between items-end lg:items-center pt-1 pb-5 lg:pb-4">
+				<!-- Logo and Menu btn -->
+				<div class="w-full lg:w-auto flex justify-between items-center">
 					<div>
 						<a id="site-logo" class="max-w-site-logo p-2 block text-md font-bold uppercase" href="<?php echo esc_url( $site_url ); ?>" title="Home - <?php echo esc_attr( $site_name ); ?>">
 							<img src="<?php echo esc_attr( get_stylesheet_directory_uri() ); ?>/img/sanday-construction-logo-horizontal-white.png" width="1024" height="406" alt="<?php echo esc_attr( $site_name ); ?> logo">
@@ -48,24 +49,24 @@ $site_url  = get_bloginfo( 'url' );
 					</div>
 				</div>
 
-				<nav id="primary-menu" class="mt-4 lg:mt-0 hidden lg:flex items-center">
+				<nav id="primary-menu" class="lg:w-auto flex lg:flex flex-col lg:flex-row items-end lg:items-center toggled-hidden">
 					<?php
 					wp_nav_menu(
 						array(
 							'theme_location'  => 'nav',
 							'container_id'    => 'site-nav',
-							'container_class' => 'mb-2 lg:mb-0 last:mb-0 lg:mr-4 lg:last:mr-0',
+							'container_class' => 'mb-4 lg:mb-0 last:mb-0 lg:mr-4 lg:last:mr-0 text-right lg:text-center',
 							'menu_class'      => 'lg:flex items-center',
-							'li_class'        => 'lg:mr-4 lg:last:mr-0',
-							'anchor_class'    => 'px-1 py-0.5 block border-2 border-transparent lg:hover:border-b-white focus:border-b-white text-xl transition-colors duration-500',
+							'li_class'        => 'mb-2 lg:mb-0 last:mb-0  lg:mr-4 lg:last:mr-0',
+							'anchor_class'    => 'lg:px-1 py-0.5 block border-2 border-transparent lg:hover:border-b-white focus:border-b-white text-xl leading-none transition-colors duration-500',
 						)
 					);
 
 					// Social Media.
-					get_template_part( 'template-parts/social-media-links' );
+					sc_build_social_media_links();
 
 					// CTAs.
-					get_template_part( 'template-parts/main-ctas' );
+					sc_build_ctas();
 
 					?>
 				</nav>

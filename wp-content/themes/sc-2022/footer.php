@@ -76,7 +76,7 @@ $anchor_class    = 'inline-flex items-center focus:underline lg:hover:underline'
 		<div class="w-full md:w-auto md:ml-auto px-2.5 xl:px-5 flex justify-center md:self-end text-center md:text-right">
 			<?php
 			// Social Media.
-			get_template_part( 'template-parts/social-media-links' );
+			sc_build_social_media_links( true );
 			?>
 		</div>
 	</div>
