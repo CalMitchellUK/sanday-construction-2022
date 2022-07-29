@@ -1,4 +1,11 @@
 <?php
+/**
+ * Footer.
+ *
+ * @package sanday
+ * @since 0.0.0
+ */
+
 $all_navs          = get_nav_menu_locations();
 // Site map.
 $sitemap_id        = 'sitemap';
@@ -70,7 +77,7 @@ $anchor_class    = 'inline-flex items-center focus:underline lg:hover:underline'
 		?>
 
 		<div class="md:ml-auto px-2.5 xl:px-5 self-end">
-			&copy; <?php echo date_i18n( 'Y' );?> - <?php echo get_bloginfo( 'name' );?>
+			&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> - <?php echo esc_html( get_bloginfo( 'name' ) ); ?>
 		</div>
 	</div>
 </footer>

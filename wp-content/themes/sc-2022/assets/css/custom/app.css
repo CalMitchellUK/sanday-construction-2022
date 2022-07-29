@@ -13,7 +13,7 @@ address {
 }
 
 .container {
-  @apply max-w-full mx-auto;
+  @apply w-11/12 max-w-full mx-auto;
 
   @screen sm {
     max-width: 480px;
@@ -127,7 +127,7 @@ body.logged-in #site-header {
     @apply mb-4;
 
     label {
-      @apply mb-3 inline-flex text-lg font-serif leading-none;
+      @apply mb-2.5 inline-flex text-lg font-serif;
     }
 
     .field-input {

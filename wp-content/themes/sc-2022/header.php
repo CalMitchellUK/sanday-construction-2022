@@ -1,6 +1,6 @@
 <?php
 /**
- * The site HTML head.
+ * Header.
  *
  * @package sanday
  * @since 0.0.0
@@ -56,7 +56,7 @@ $site_url  = get_bloginfo( 'url' );
 							'container_id'   => 'site-nav',
 							'menu_class'     => 'lg:mr-4 lg:flex items-center',
 							'li_class'       => 'lg:mr-4 lg:last:mr-0',
-							'anchor_class'   => 'px-1 py-0.5 block border-2 border-transparent lg:hover:border-b-white focus:border-b-white text-xl leading-tight transition-colors duration-500',
+							'anchor_class'   => 'px-1 py-0.5 block border-2 border-transparent lg:hover:border-b-white focus:border-b-white text-xl transition-colors duration-500',
 						)
 					);
 

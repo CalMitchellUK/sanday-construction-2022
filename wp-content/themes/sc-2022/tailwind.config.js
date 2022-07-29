@@ -6,6 +6,18 @@ module.exports = {
 		'./safelist.txt'
 	],
 	theme: {
+		fontSize: {
+			'xs': ['.75rem', '1.25'],
+			'sm': ['.875rem', '1.25'],
+			'base': ['1rem', '1.25'],
+			'lg': ['1.125rem', '1.25'],
+			'xl': ['1.25rem', '1.25'],
+			'2xl': ['1.5rem', '1.25'],
+			'3xl': ['1.875rem', '1.25'],
+			'4xl': ['2.25rem', '1.25'],
+			'5xl': ['3rem', '1.25'],
+			'6xl': ['4rem', '1.25'],
+		},
 		screens: {
 			'sm': '501px',
 			'md': '768px',
@@ -27,14 +39,6 @@ module.exports = {
 				sans: ['"Roboto"', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', '"Helvetica Neue"', 'Arial', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji";'],
 				serif: ['Kadwa', 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif']
 			},
-			fontSize: {
-				small: '0.875rem',
-				regular: '1rem',
-				large: '1.125rem',
-				xl: '1.25rem',
-				xxl: '1.5rem',
-				xxxl: '1.875rem',
-			},
 			maxWidth: {
 				'site-logo': '186px',
 			},
@@ -43,6 +47,9 @@ module.exports = {
 				'25vh': '25vh',
 				'30vh': '30vh',
 				'50vh': '50vh',
+			},
+			minHeight: {
+				'200px' : '200px',
 			},
 			padding: {
 				'video': '56.25%'

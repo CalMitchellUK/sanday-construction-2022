@@ -196,7 +196,7 @@ if ( $items_count ) {
 				echo '<label class="mb-1 block text-sm font-bold">Status</label>';
 				echo '<p class="flex items-center">';
 				echo '<span class="w-3 h-3 mr-2 inline-flex rounded-full ' . esc_attr( $blip_color ) . '"></span>';
-				echo '<span class="text-lg leading-none">' . esc_html( $item['doc_status']['label'] ) . '</span>';
+				echo '<span class="text-lg">' . esc_html( $item['doc_status']['label'] ) . '</span>';
 				echo '</p>';
 				echo '</div>';
 			}

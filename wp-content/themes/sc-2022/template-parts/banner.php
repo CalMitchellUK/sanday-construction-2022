@@ -17,7 +17,7 @@ if ( $banner_image ) {
 			$height_classes = 'max-h-15vh md:max-h-30vh';
 			break;
 	}
-	$banner_classes = 'relative w-full ' . $height_classes . ' overflow-hidden';
+	$banner_classes = 'relative w-full ' . $height_classes . ' min-h-200px overflow-hidden';
 
 	echo '<div id="page-banner-image" class="' . esc_attr( $banner_classes ) . '">';
 	echo '<div class="relative w-full pb-video"></div>';

@@ -21,7 +21,7 @@ get_header();
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 				<header class="entry-header mb-10">
-					<?php the_title( '<h1 class="entry-title text-2xl lg:text-5xl leading-tight">', '</h1>' ); ?>
+					<?php the_title( '<h1 class="entry-title text-2xl lg:text-5xl">', '</h1>' ); ?>
 				</header>
 
 				<div class="entry-content tinymce xl:w-3/4">

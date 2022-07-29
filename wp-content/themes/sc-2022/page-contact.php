@@ -21,7 +21,7 @@ get_header();
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 				<header class="entry-header mb-10">
-					<?php the_title( '<h1 class="entry-title text-2xl lg:text-5xl leading-tight">', '</h1>' ); ?>
+					<?php the_title( '<h1 class="entry-title text-2xl lg:text-5xl">', '</h1>' ); ?>
 				</header>
 
 				<div class="entry-content tinymce xl:w-3/4">
@@ -39,7 +39,7 @@ get_header();
 						<?php
 						$ci_heading = get_field( 'heading', 'contact-info' );
 						if ( $ci_heading ) {
-							echo '<h2 class="text-4xl leading-tight">' . esc_html( $ci_heading ) . '</h2>';
+							echo '<h2 class="text-4xl">' . esc_html( $ci_heading ) . '</h2>';
 						}
 
 						$ci_address = get_field( 'address', 'contact-info' );
