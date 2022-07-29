@@ -711,3 +711,29 @@ function sc_dashboard_widgets() {
 	);
 }
 add_action( 'wp_dashboard_setup', 'sc_dashboard_widgets' );
+
+/**
+ * WYSIWYG - Set to only Headings/Paragraphs and pasting text removes styles.
+ *
+ * @param Array $init The initialize args from WP.
+ * @return Array Returns the update $init.
+ */
+function sc_set_tinymce_html( $init ) {
+	$init['block_formats'] = 'Heading 2=h2;Heading 3=h3;Heading 4=h4;Paragraph=p';
+	$init['paste_as_text'] = true;
+	return $init;
+}
+add_filter( 'tiny_mce_before_init', 'sc_set_tinymce_html' );
+
+/**
+ * Remove unwanted WordPress TinyMCE buttons from first row.
+ *
+ * @param Array $buttons Buttons used in tinymce.
+ * @return Array Returns reduced list of buttons.
+ */
+function sc_remove_tinymce_buttons( $buttons ) {
+	$remove = array( 'wp_more', 'hr', 'wp_help', 'strikethrough' );
+	return array_diff( $buttons, $remove );
+}
+add_filter( 'mce_buttons', 'sc_remove_tinymce_buttons', 2000 );
+add_filter( 'mce_buttons_2', 'sc_remove_tinymce_buttons', 2020 );
