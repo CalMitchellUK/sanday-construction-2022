@@ -15,7 +15,7 @@ $main_text = get_field( 'main_text' );
 echo '<div class="container relative mb-16 xl:mb-20 px-2.5 xl:px-5">';
 echo '<div class="half-height-offset w-full xl:w-3/4">';
 echo '<div class="bg-light text-dark p-8 drop-shadow">';
-echo '<h1 class="text-3xl xl:text-5xl 2xl:text-6xl">' . esc_html( $main_text ) . '</h1>';
+echo '<h1 class="text-3xl xl:text-5xl xl:leading-tight 2xl:text-6xl 2xl:leading-tight">' . esc_html( $main_text ) . '</h1>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
