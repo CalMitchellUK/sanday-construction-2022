@@ -501,7 +501,7 @@ function cs_update_exired_docs() {
 				$exp_dt      = strtotime( $expiry_date );
 				$exp_text    = gmdate( 'd/m/Y', $exp_dt );
 				$notice_text = $data->display_name . ': ' . $doc_title . ' - <strong>' . $exp_text . '</strong>';
-				if ( $today > $expiry_date ) {
+				if ( $today >= $expiry_date ) {
 					array_push( $expired, $notice_text );
 					// Update to expired, if not already.
 					if ( 'expired' !== $doc_status['value'] ) {
@@ -509,7 +509,7 @@ function cs_update_exired_docs() {
 					}
 				} else {
 					$month_ahead = gmdate( 'Ymd', strtotime( '-1 months', strtotime( $expiry_date ) ) );
-					if ( $today > $month_ahead ) {
+					if ( $today >= $month_ahead ) {
 						array_push( $soon, $notice_text );
 					}
 				}
