@@ -16,7 +16,7 @@ function sc_build_columns( $col ) {
 	$which_layout = $col['acf_fc_layout'];
 	if ( $which_layout ) {
 
-		echo '<div class="col w-full lg:w-' . esc_attr( $col_width ) . ' mb-6 lg:mb-0 last:mb-0 px-2.5 xl:px-5">';
+		echo '<div class="col w-full lg:w-' . esc_attr( $col_width ) . ' mb-8 lg:mb-0 last:mb-0 px-2.5 xl:px-5">';
 		switch ( $which_layout ) {
 			case 'text_block':
 				sc_build_column__text( $col );

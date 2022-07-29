@@ -12,10 +12,10 @@ get_header();
 $main_text = get_field( 'main_text' );
 
 // Main Text.
-echo '<div class="container relative mb-16 xl:mb-20 px-2.5 xl:px-5">';
+echo '<div class="container relative mb-10 md:mb-16 xl:mb-20 px-2.5 xl:px-5">';
 echo '<div class="half-height-offset w-full xl:w-3/4">';
-echo '<div class="bg-light text-dark p-8 drop-shadow">';
-echo '<h1 class="text-3xl xl:text-5xl xl:leading-tight 2xl:text-6xl 2xl:leading-tight">' . esc_html( $main_text ) . '</h1>';
+echo '<div class="bg-light text-dark px-4 py-5 md:p-8 drop-shadow text-center md:text-left">';
+echo '<h1 class="text-3xl xl:text-5xl 2xl:text-6xl">' . esc_html( $main_text ) . '</h1>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
@@ -34,8 +34,8 @@ if ( $ki_count ) {
 		echo '<div class="w-full ' . esc_attr( $col_width ) . ' mb-5 px-2.5 xl:px-5 flex flex-col">';
 		echo '<div class="grow flex flex-col bg-light text-dark">';
 		echo wp_get_attachment_image( $image, 'card', null, array( 'class' => 'block' ) );
-		echo '<div class="p-2.5 xl:p-5 flex flex-col grow">';
-		echo '<h2 class="mb-3 text-lg xl:text-2xl">' . esc_html( $card_title ) . '</h2>';
+		echo '<div class="p-4 xl:p-5 xxl:p-6 flex flex-col grow">';
+		echo '<h2 class="mb-2.5 lg:mb-3 text-xl xl:text-2xl">' . esc_html( $card_title ) . '</h2>';
 		echo '<p class="">' . wp_kses_post( $card_text ) . '</p>';
 		echo '</div>';
 		echo '</div>';
