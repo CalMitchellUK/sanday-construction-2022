@@ -18,7 +18,7 @@ $useful_nav       = get_term( $all_navs[ $useful_id ], 'nav_menu' );
 $useful_nav_count = $useful_nav->count;
 $useful_nav_name  = $useful_nav->name;
 // Column info.
-$h2_classes      = 'mb-4 text-lg';
+$h2_classes      = 'mb-4 text-xl xl:text-2xl';
 $container_class = 'mb-8 last:mb-0';
 $menu_class      = '';
 $li_class        = 'mb-2 last:mb-0';

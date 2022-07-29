@@ -32,7 +32,7 @@ get_header();
 			<?php else : ?>
 
 				<header class="entry-header mb-10">
-					<?php the_title( '<h1 class="entry-title text-2xl lg:text-5xl">', '</h1>' ); ?>
+					<?php the_title( '<h1 class="entry-title text-3xl xl:text-5xl">', '</h1>' ); ?>
 				</header>
 
 				<div class="entry-content tinymce">

@@ -21,7 +21,7 @@ get_header();
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 				<header class="entry-header mb-10">
-					<?php the_title( '<h1 class="entry-title text-2xl lg:text-5xl">', '</h1>' ); ?>
+					<?php the_title( '<h1 class="entry-title text-3xl xl:text-5xl">', '</h1>' ); ?>
 				</header>
 
 				<div class="entry-content tinymce xl:w-3/4">
@@ -31,7 +31,7 @@ get_header();
 				<div class="w-full my-10 border-t border-white/10" aria-hidden="true"></div>
 
 				<div class="flex flex-wrap items-start">
-					<div class="w-full lg:w-1/2 lg:pr-5">
+					<div class="w-full lg:w-1/2 mb-8 lg:pr-5">
 						<?php echo do_shortcode( '[contact-form-7 id="205" title="Contact Form"]' ); ?>
 					</div>
 
@@ -39,13 +39,13 @@ get_header();
 						<?php
 						$ci_heading = get_field( 'heading', 'contact-info' );
 						if ( $ci_heading ) {
-							echo '<h2 class="text-4xl">' . esc_html( $ci_heading ) . '</h2>';
+							echo '<h2 class="mb-3 text-2xl lg:text-4xl">' . esc_html( $ci_heading ) . '</h2>';
 						}
 
 						$ci_address = get_field( 'address', 'contact-info' );
 						if ( $ci_address ) {
-							echo '<div class="my-3 border-t border-white/10" aria-hidden="true"></div>';
-							echo '<div class="">';
+							echo '<div class="mb-3 border-t border-white/10" aria-hidden="true"></div>';
+							echo '<div>';
 							echo '<label class="mb-1 block text-sm font-bold">Address</label>';
 							echo '<address>' . wp_kses_post( $ci_address ) . '</address>';
 							echo '</div>';
@@ -53,7 +53,6 @@ get_header();
 
 						$contact_details = get_field( 'contact_details', 'contact-info' ) ?? array();
 						if ( count( $contact_details ) ) {
-
 							foreach ( $contact_details as $contact ) {
 								$c_name     = sc_acf_subfield( $contact, 'name' );
 								$c_email    = sc_acf_subfield( $contact, 'email' );

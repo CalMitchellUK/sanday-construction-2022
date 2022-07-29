@@ -6,20 +6,6 @@
  * @since 0.0.0
  */
 
-// Vars.
-$border_colors = array(
-	'to-do'      => 'border-l-sky-600',
-	'processing' => 'border-l-amber-500',
-	'up-to-date' => 'border-l-green-600',
-	'expired'    => 'border-l-red-600',
-);
-$bg_colors     = array(
-	'to-do'      => 'bg-sky-600',
-	'processing' => 'bg-amber-500',
-	'up-to-date' => 'bg-green-600',
-	'expired'    => 'bg-red-600',
-);
-
 // Categories.
 $categories = array(
 	'contracts'        => array(
@@ -86,12 +72,10 @@ if ( have_rows( 'docs', 'user_' . $user_id ) ) {
 	}
 }
 
-echo '<h2 class="mb-6 text-xl lg:text-4xl">Your Documents</h2>';
-
 // Actionable alert.
 if ( count( $actionables ) ) {
 	echo '<div class="mb-10 px-4 py-5 border-4 border-amber-600 rounded-lg bg-amber-50 text-dark overflow-hidden">';
-	echo '<h3 class="mb-4">The following documents require your attention:</h3>';
+	echo '<h2 class="mb-6 text-2xl xl:text-3xl">The following documents require your attention</h2>';
 	echo '<ul class="pl-6 block list-disc">';
 	foreach ( $actionables as $item ) {
 		$cat_title = $categories[ $item['doc_type'] ]['name'] ?? '';
@@ -129,96 +113,14 @@ if ( $items_count ) {
 		echo '<li class="mb-12 block">';
 
 		// Toggle.
-		echo '<h3 class="mb-6 text-2xl">' . esc_html( $cat_title ) . '</h3>';
+		echo '<h2 class="mb-6 text-2xl lg:text-4xl">' . esc_html( $cat_title ) . '</h2>';
 
 		// Items.
 		echo '<ul class="">';
+
 		// Loop.
-		foreach ( $items as $item ) {
-			$status_color = $item['doc_status'] && $border_colors[ $item['doc_status']['value'] ] ? $border_colors[ $item['doc_status']['value'] ] : 'border-l-gray-700';
+		sc_build_file_rows( $items, true );
 
-			echo '<li id="doc-' . esc_attr( $item['id'] ) . '" class="w-full mb-3 last:mb-0 px-4 py-5 flex flex-wrap border-l-10 ' . esc_attr( $status_color ) . ' even:bg-white/5">';
-
-			// Name.
-			echo '<h4 class="mb-1 px-2 text-2xl">' . esc_html( $item['doc_title'] ) . '</h4>';
-
-			echo '<div class="w-full my-3 border-t border-white/10" aria-hidden="true"></div>';
-
-			// Description / Instructions.
-			echo '<div class="w-2/3 px-2 flex-shrink-0">';
-			echo '<label class="mb-1 block text-sm font-bold">Description / Instructions</label>';
-			echo wp_kses_post( $item['description'] );
-			echo '</div>';
-
-			// Files.
-			$files = sc_acf_subfield( $item, 'files' );
-			if ( $files && count( $files ) ) {
-				echo '<div class="w-1/3 flex-shrink-0">';
-				echo '<label class="mb-1 px-2 block text-sm font-bold">Files</label>';
-				foreach ( $files as $file_row ) {
-					$file = sc_acf_subfield( $file_row, 'file' );
-					if ( ! $file ) {
-						continue;
-					}
-					$filename  = $file['filename'];
-					$file_url  = $file['url'];
-					$file_icon = $file['icon'];
-					$filesize  = size_format( $file['filesize'] );
-					echo '<a class="mb-1 last:mb-0 px-2 py-1 flex items-start text-sm hover:bg-light hover:text-dark transition-colors duration-500" href="' . esc_url( $file_url ) . '" target="_blank" rel="nofollow" title="Open &quot;' . esc_attr( $filename ) . '&quot;">';
-					echo '<img class="mr-3" src="' . esc_url( $file_icon ) . '" width="36" alt>';
-					echo '<div clas="flex-shrink-0">';
-					echo '<p class="font-bold">' . esc_html( $filename ) . '</p>';
-					echo '<p class="text-xs">' . esc_html( $filesize ) . '</p>';
-					echo '</div>';
-					echo '</a>';
-				}
-				echo '</div>';
-			}
-
-			// Notes.
-			if ( $item['notes'] ) {
-				echo '<div class="w-full my-3 border-t border-white/10" aria-hidden="true"></div>';
-				echo '<div class="w-full px-2 flex-shrink-0">';
-				echo '<label class="mb-1 block text-sm font-bold">Notes</label>';
-				echo wp_kses_post( $item['notes'] );
-				echo '</div>';
-			}
-
-			if ( $item['doc_status'] || $item['due_date'] || $item['expiry_date'] ) {
-				echo '<div class="w-full my-3 border-t border-white/10" aria-hidden="true"></div>';
-			}
-
-			// Status.
-			if ( $item['doc_status'] ) {
-				$blip_color = $bg_colors[ $item['doc_status']['value'] ] ? $bg_colors[ $item['doc_status']['value'] ] : 'border-l-gray-700';
-
-				echo '<div class="w-1/3 px-2 flex-shrink-0">';
-				echo '<label class="mb-1 block text-sm font-bold">Status</label>';
-				echo '<p class="flex items-center">';
-				echo '<span class="w-3 h-3 mr-2 inline-flex rounded-full ' . esc_attr( $blip_color ) . '"></span>';
-				echo '<span class="text-lg">' . esc_html( $item['doc_status']['label'] ) . '</span>';
-				echo '</p>';
-				echo '</div>';
-			}
-
-			// Due Date.
-			if ( $item['due_date'] ) {
-				echo '<div class="w-1/3 px-2 flex-shrink-0">';
-				echo '<label class="mb-1 block text-sm font-bold">Due Date</label>';
-				echo '<p>' . esc_html( sc_get_date( $item['due_date'] ) ) . '</p>';
-				echo '</div>';
-			}
-
-			// Expiry Date.
-			if ( $item['expiry_date'] ) {
-				echo '<div class="w-1/3 px-2 flex-shrink-0">';
-				echo '<label class="mb-1 block text-sm font-bold">Expiry date</label>';
-				echo '<p>' . esc_html( sc_get_date( $item['expiry_date'] ) ) . '</p>';
-				echo '</div>';
-			}
-
-			echo '</li>';
-		}
 		echo '</ul>';
 
 		echo '</li>';

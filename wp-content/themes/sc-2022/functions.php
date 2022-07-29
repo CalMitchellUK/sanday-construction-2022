@@ -737,3 +737,130 @@ function sc_remove_tinymce_buttons( $buttons ) {
 }
 add_filter( 'mce_buttons', 'sc_remove_tinymce_buttons', 2000 );
 add_filter( 'mce_buttons_2', 'sc_remove_tinymce_buttons', 2020 );
+
+/**
+ * Get status border color
+ *
+ * @param String $status Status as a string.
+ * @return String Tailwind border class.
+ */
+function sc_get_status_border_color( $status = '' ) {
+	$border_colors = array(
+		'to-do'      => 'border-l-sky-600',
+		'processing' => 'border-l-amber-500',
+		'up-to-date' => 'border-l-green-600',
+		'expired'    => 'border-l-red-600',
+	);
+	return $status ? $border_colors[ $status ] : 'border-l-gray-700';
+}
+
+/**
+ * Get status background color
+ *
+ * @param String $status Status as a string.
+ * @return String Tailwind background class.
+ */
+function sc_get_status_bg_color( $status = '' ) {
+	$bg_colors = array(
+		'to-do'      => 'bg-sky-600',
+		'processing' => 'bg-amber-500',
+		'up-to-date' => 'bg-green-600',
+		'expired'    => 'bg-red-600',
+	);
+	return $status ? $bg_colors[ $status ] : 'bg-gray-700';
+}
+
+/**
+ * Build Document Rows.
+ *
+ * @param Array   $items Array of items.
+ * @param Boolean $full_list Is this.
+ */
+function sc_build_file_rows( $items = array(), $full_list = false ) {
+	foreach ( $items as $item ) {
+		$doc_status          = $item['doc_status'] ? $item['doc_status'] : false;
+		$status_value        = $doc_status ? $doc_status['value'] : false;
+		$status_border_color = sc_get_status_border_color( $full_list ? $status_value : null );
+		$status_bg_color     = sc_get_status_bg_color( $status_value );
+
+		echo '<li id="doc-' . esc_attr( $item['id'] ) . '" class="w-full mb-3 last:mb-0 px-4 pt-5 pb-2 flex flex-wrap border-l-10 ' . esc_attr( $status_border_color ) . ' even:bg-white/5">';
+
+		// Name.
+		echo '<h3 class="mb-4 px-2.5 text-2xl">' . esc_html( $item['doc_title'] ) . '</h3>';
+
+		echo '<div class="w-full mb-3 border-t border-white/10" aria-hidden="true"></div>';
+
+		// Description / Instructions.
+		echo '<div class="w-full lg:w-2/3 mb-3 px-2.5 flex-shrink-0">';
+		echo '<h4 class="mb-1 block font-bold">Description / Instructions</h4>';
+		echo '<div class="tinymce">' . wp_kses_post( $item['description'] ) . '</div>';
+		echo '</div>';
+
+		// Files.
+		$files = sc_acf_subfield( $item, 'files' );
+		if ( $files && count( $files ) ) {
+			echo '<div class="w-full lg:w-1/3 mb-3 flex-shrink-0">';
+			echo '<h4 class="mb-1 px-2.5 block font-bold">Files</h4>';
+			foreach ( $files as $file_row ) {
+				$file = sc_acf_subfield( $file_row, 'file' );
+				if ( ! $file ) {
+					continue;
+				}
+				$filename  = $file['filename'];
+				$file_url  = $file['url'];
+				$file_icon = $file['icon'];
+				$filesize  = size_format( $file['filesize'] );
+				echo '<a class="mb-1 last:mb-0 px-2.5 py-1 flex items-start hover:bg-light hover:text-dark transition-colors duration-500" href="' . esc_url( $file_url ) . '" target="_blank" rel="nofollow" title="Open &quot;' . esc_attr( $filename ) . '&quot;">';
+				echo '<img class="mr-3" src="' . esc_url( $file_icon ) . '" width="36" alt>';
+				echo '<div clas="flex-shrink-0">';
+				echo '<p class="font-bold">' . esc_html( $filename ) . '</p>';
+				echo '<p class="text-xs">' . esc_html( $filesize ) . '</p>';
+				echo '</div>';
+				echo '</a>';
+			}
+			echo '</div>';
+		}
+
+		// Notes.
+		if ( $item['notes'] ) {
+			echo '<div class="w-full mb-3 border-t border-white/10" aria-hidden="true"></div>';
+			echo '<div class="mb-3 w-full px-2.5 flex-shrink-0">';
+			echo '<h4 class="mb-1 block font-bold">Notes</h4>';
+			echo wp_kses_post( $item['notes'] );
+			echo '</div>';
+		}
+
+		if ( $doc_status || $item['due_date'] || $item['expiry_date'] ) {
+			echo '<div class="w-full mb-3 border-t border-white/10" aria-hidden="true"></div>';
+		}
+
+		// Status.
+		if ( $doc_status ) {
+			echo '<div class="mb-3 mr-3 px-2.5 flex-shrink-0">';
+			echo '<h4 class="mb-1 block font-bold">Status</h4>';
+			echo '<p class="flex items-center">';
+			echo '<span class="w-3 h-3 mr-2 inline-flex rounded-full ' . esc_attr( $status_bg_color ) . '"></span>';
+			echo '<span class="text-lg">' . esc_html( $doc_status['label'] ) . '</span>';
+			echo '</p>';
+			echo '</div>';
+		}
+
+		// Due Date.
+		if ( $item['due_date'] ) {
+			echo '<div class="mb-3 mr-3 px-2.5 flex-shrink-0">';
+			echo '<h4 class="mb-1 block font-bold">Due Date</h4>';
+			echo '<p>' . esc_html( sc_get_date( $item['due_date'] ) ) . '</p>';
+			echo '</div>';
+		}
+
+		// Expiry Date.
+		if ( $item['expiry_date'] ) {
+			echo '<div class="mb-3 mr-3 px-2.5 flex-shrink-0">';
+			echo '<h4 class="mb-1 block font-bold">Expiry date</h4>';
+			echo '<p>' . esc_html( sc_get_date( $item['expiry_date'] ) ) . '</p>';
+			echo '</div>';
+		}
+
+		echo '</li>';
+	}
+}
