@@ -40,7 +40,6 @@ if ( have_rows( 'docs', 'user_' . $user_id ) ) {
 		$doc_title   = get_document_row_field( $item, 'title' );
 		$doc_type    = get_document_row_field( $item, 'document_type' ) ?? 'others';
 		$description = get_document_row_field( $item, 'description' );
-		$file        = get_document_row_field( $item, 'file' );
 		$files       = get_document_row_field( $item, 'files' );
 		$doc_status  = get_document_row_field( $item, 'status' );
 		$notes       = get_document_row_field( $item, 'notes' );
@@ -51,7 +50,6 @@ if ( have_rows( 'docs', 'user_' . $user_id ) ) {
 			'doc_type'    => $doc_type,
 			'doc_title'   => $doc_title,
 			'description' => $description,
-			'file'        => $file,
 			'files'       => $files,
 			'doc_status'  => $doc_status,
 			'notes'       => $notes,
