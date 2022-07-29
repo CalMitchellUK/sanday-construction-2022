@@ -6,7 +6,7 @@
  * @since 0.0.0
  */
 
-$all_navs          = get_nav_menu_locations();
+$all_navs = get_nav_menu_locations();
 // Site map.
 $sitemap_id        = 'sitemap';
 $sitemap_nav       = get_term( $all_navs[ $sitemap_id ], 'nav_menu' );

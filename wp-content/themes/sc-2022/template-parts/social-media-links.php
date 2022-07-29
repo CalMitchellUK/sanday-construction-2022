@@ -16,7 +16,7 @@ $sm_classes = array(
 );
 
 if ( count( $sm_links ) ) {
-	echo '<ul class="lg:m-2 flex items-center">';
+	echo '<ul class="mb-2 lg:mb-0 last:mb-0 lg:mr-4 lg:last:mr-0 flex items-center">';
 	foreach ( $sm_links as $sm_link ) {
 		$sm_type    = sc_acf_subfield( $sm_link, 'type' );
 		$url        = sc_acf_subfield( $sm_link, 'url' );

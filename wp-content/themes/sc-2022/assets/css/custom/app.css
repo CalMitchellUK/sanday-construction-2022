@@ -33,8 +33,6 @@ address {
 }
 
 #site-header {
-  @apply bg-transparent;
-
   .gradient {
     background: linear-gradient(rgba(29, 30, 27, 0.95), transparent);
   }
@@ -71,11 +69,11 @@ address {
 }
 
 body.logged-in #site-header {
-  @screen md {
+  @screen lg {
     margin-top: 46px;
   }
 
-  @media only screen and (min-width: 783px) {
+  @media (min-width: 1025px) {
     margin-top: 32px;
   }
 }

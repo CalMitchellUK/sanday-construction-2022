@@ -30,9 +30,9 @@ $site_url  = get_bloginfo( 'url' );
 
 	<?php do_action( 'tailpress_header' ); ?>
 
-	<header id="site-header" class="relative md:fixed left-0 top-0 w-full z-10 text-white transition-colors duration-500">
+	<header id="site-header" class="relative lg:fixed left-0 top-0 w-full z-10 bg-dark lg:bg-transparent text-white transition-colors duration-500">
 		<!-- Gradient -->
-		<div class="gradient absolute inset-0 block transition-opacity duration-200"></div>
+		<div class="gradient absolute inset-0 hidden lg:block transition-opacity duration-200"></div>
 
 		<div class="container relative px-2.5 xl:px-5">
 			<div class="lg:flex justify-between items-center pt-1 pb-4">
@@ -52,11 +52,12 @@ $site_url  = get_bloginfo( 'url' );
 					<?php
 					wp_nav_menu(
 						array(
-							'theme_location' => 'nav',
-							'container_id'   => 'site-nav',
-							'menu_class'     => 'lg:mr-4 lg:flex items-center',
-							'li_class'       => 'lg:mr-4 lg:last:mr-0',
-							'anchor_class'   => 'px-1 py-0.5 block border-2 border-transparent lg:hover:border-b-white focus:border-b-white text-xl transition-colors duration-500',
+							'theme_location'  => 'nav',
+							'container_id'    => 'site-nav',
+							'container_class' => 'mb-2 lg:mb-0 last:mb-0 lg:mr-4 lg:last:mr-0',
+							'menu_class'      => 'lg:flex items-center',
+							'li_class'        => 'lg:mr-4 lg:last:mr-0',
+							'anchor_class'    => 'px-1 py-0.5 block border-2 border-transparent lg:hover:border-b-white focus:border-b-white text-xl transition-colors duration-500',
 						)
 					);
 

@@ -237,7 +237,7 @@ function cm_nav_menu_link_add_class( $attrs, $item, $args ) {
 	}
 
 	if ( in_array( 'current-menu-item', $item->classes, true ) ) {
-		$attrs['class'] .= ' border-b-white';
+		$attrs['class'] .= ' lg:border-b-white bg-white/5 lg:bg-transparent';
 	}
 
 	return $attrs;
