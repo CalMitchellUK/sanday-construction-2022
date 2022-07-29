@@ -19,7 +19,7 @@ $useful_nav_count = $useful_nav->count;
 $useful_nav_name  = $useful_nav->name;
 // Column info.
 $h2_classes      = 'mb-4 text-xl xl:text-2xl';
-$container_class = 'mb-8 last:mb-0';
+$container_class = 'mb-4 last:mb-0';
 $menu_class      = '';
 $li_class        = 'mb-2 last:mb-0';
 $anchor_class    = 'inline-flex items-center focus:underline lg:hover:underline';
@@ -53,7 +53,7 @@ $anchor_class    = 'inline-flex items-center focus:underline lg:hover:underline'
 				);
 			}
 			?>
-			<div>
+			<div class="mb-4 md:mb-0 flex justify-center md:justify-start">
 				<img src="<?php echo esc_attr( get_stylesheet_directory_uri() ); ?>/img/sanday-construction-ident-white.png" width="80" height="68" alt="<?php echo esc_attr( $site_name ); ?> ident">
 			</div>
 		</div>
@@ -76,7 +76,7 @@ $anchor_class    = 'inline-flex items-center focus:underline lg:hover:underline'
 		}
 		?>
 
-		<div class="md:ml-auto px-2.5 xl:px-5 self-end">
+		<div class="w-full md:w-auto md:ml-auto px-2.5 xl:px-5 md:self-end text-center md:text-right">
 			&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> - <?php echo esc_html( get_bloginfo( 'name' ) ); ?>
 		</div>
 	</div>
