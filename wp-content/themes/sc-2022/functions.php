@@ -472,6 +472,23 @@ function get_document_row_field( $item = array(), $key = '' ) {
 }
 
 /**
+ * Add notice.
+ */
+function sc_build_notice( $id = '', $type = '', $text = '', $items = array(), $is_dismissable = false ) {
+	if ( ! count( $items ) ) {
+		return;
+	}
+	echo '<div id="docs-' . esc_attr( $id ) . '" class="notice notice-' . esc_attr( $type ) . ' ' . ( $is_dismissable ? 'is-dismissable' : '' ) . '">';
+	echo '<p>' . wp_kses_post( $text ) . '</p>';
+	echo '<ul>';
+	foreach ( $items as $item ) {
+		echo '<li>' . wp_kses_post( $item ) . '</li>';
+	}
+	echo '</ul>';
+	echo '</div>';
+}
+
+/**
  * Loop through users to check for expired.
  */
 function cs_update_exired_docs() {
@@ -481,9 +498,11 @@ function cs_update_exired_docs() {
 		return;
 	}
 	// Start.
-	$today   = gmdate( 'Ymd' );
-	$expired = array();
-	$soon    = array();
+	$today        = gmdate( 'Ymd' );
+	$expired_now  = array();
+	$expires_soon = array();
+	$overdue      = array();
+	$due_soon     = array();
 	foreach ( get_users() as $user ) {
 		$data    = $user->data;
 		$user_id = $data->ID;
@@ -494,61 +513,48 @@ function cs_update_exired_docs() {
 				$document    = $is_existing ? get_sub_field( 'document' ) : false;
 				$doc_title   = $document ? get_the_title( $document ) : get_sub_field( 'title' );
 				$doc_status  = get_sub_field( 'status' );
-				$expiry_date = get_sub_field( 'expiry_date' );
-				if ( empty( $expiry_date ) ) {
-					continue;
-				}
-				$exp_dt      = strtotime( $expiry_date );
-				$exp_text    = gmdate( 'd/m/Y', $exp_dt );
-				$notice_text = $data->display_name . ': ' . $doc_title . ' - <strong>' . $exp_text . '</strong>';
-				if ( $today >= $expiry_date ) {
-					array_push( $expired, $notice_text );
-					// Update to expired, if not already.
-					if ( 'expired' !== $doc_status['value'] ) {
-						update_sub_field( 'status', 'expired' );
+				// Due date.
+				$due_date = get_sub_field( 'due_date' );
+				if ( ! empty( $due_date ) ) {
+					$due_dt      = strtotime( $due_date );
+					$due_text    = gmdate( 'd/m/Y', $due_dt );
+					$notice_text = '<strong>' . $data->display_name . '</strong>: ' . $doc_title . ' (' . $due_text . ')';
+					$month_ahead = gmdate( 'Ymd', strtotime( '-1 months', strtotime( $due_date ) ) );
+					if ( $today >= $due_date ) {
+						array_push( $overdue, $notice_text );
+					} elseif ( $today >= $month_ahead ) {
+						array_push( $due_soon, $notice_text );
 					}
-				} else {
+				}
+				// Expiry date.
+				$expiry_date = get_sub_field( 'expiry_date' );
+				if ( ! empty( $expiry_date ) ) {
+					$exp_dt      = strtotime( $expiry_date );
+					$exp_text    = gmdate( 'd/m/Y', $exp_dt );
+					$notice_text = '<strong>' . $data->display_name . '</strong>: ' . $doc_title . ' (' . $exp_text . ')';
 					$month_ahead = gmdate( 'Ymd', strtotime( '-1 months', strtotime( $expiry_date ) ) );
-					if ( $today >= $month_ahead ) {
-						array_push( $soon, $notice_text );
+					if ( $today >= $expiry_date ) {
+						array_push( $expired_now, $notice_text );
+						// Update to expired, if not already.
+						if ( 'expired' !== $doc_status['value'] ) {
+							update_sub_field( 'status', 'expired' );
+						}
+					} elseif ( $today >= $month_ahead ) {
+						array_push( $expires_soon, $notice_text );
 					}
 				}
 			}
 		}
 	}
-	// Not Employees/Contractors.
-	if ( ! current_user_can( 'edit_users' ) ) {
-		return;
-	}
 	// Display notices.
-	if ( count( $expired ) || count( $soon ) ) {
+	if ( current_user_can( 'edit_users' ) ) {
 		add_action(
 			'admin_notices',
-			function() use ( $expired, $soon ) {
-				if ( count( $expired ) ) {
-					echo '<div id="docs-expired" class="notice notice-error">';
-					echo '<p>The following documents <strong>have expired</strong>:</p>';
-					echo '<ul>';
-					foreach ( $expired as $notice ) {
-						echo '<li>';
-						echo wp_kses_post( $notice );
-						echo '</li>';
-					}
-					echo '</ul>';
-					echo '</div>';
-				}
-				if ( count( $soon ) ) {
-					echo '<div id="docs-expiring" class="notice notice-info">';
-					echo '<p>The following documents will expire within the next month:</p>';
-					echo '<ul>';
-					foreach ( $soon as $notice ) {
-						echo '<li>';
-						echo wp_kses_post( $notice );
-						echo '</li>';
-					}
-					echo '</ul>';
-					echo '</div>';
-				}
+			function() use ( $expired_now, $expires_soon, $overdue, $due_soon ) {
+				sc_build_notice( 'overdue', 'error', 'The following documents are <strong>overdue</strong>:', $overdue );
+				sc_build_notice( 'expired', 'error', 'The following documents have <strong>expired</strong>:', $expired_now );
+				sc_build_notice( 'due-soon', 'warning', 'The following documents are <strong>due</strong> within the next month:', $due_soon );
+				sc_build_notice( 'expires-soon', 'warning', 'The following documents will <strong>expire</strong> within the next month:', $expires_soon );
 			}
 		);
 	}
@@ -576,9 +582,9 @@ add_filter( 'acf/fields/relationship/query', 'filter_acf_relationship', 10, 3 );
  */
 function sc_get_user_dashboard_cols( $foot = false, $admin = false ) {
 	$row1  = '<th colspan="5">Documents</th>';
-	$row2  = '<th class="keyed"><div><span class="blip bg-to-do"></span><span class="text">To-do</span></div></th>';
+	$row2  = '<th class="keyed"><div><span class="blip bg-up-to-date"></span><span class="text">Up-tp-date</span></div></th>';
+	$row2 .= '<th class="keyed"><div><span class="blip bg-to-do"></span><span class="text">To-do</span></div></th>';
 	$row2 .= '<th class="keyed"><div><span class="blip bg-processing"></span><span class="text">Processing</span></div></th>';
-	$row2 .= '<th class="keyed"><div><span class="blip bg-up-to-date"></span><span class="text">Up-tp-date</span></div></th>';
 	$row2 .= '<th class="keyed"><div><span class="blip bg-expired"></span><span class="text">Expired</span></div></th>';
 	$row2 .= '<th class="keyed"><div><span class="blip bg-other"></span><span class="text">Other</span></div></th>';
 
@@ -638,14 +644,14 @@ function sc_dashboard_widgets() {
 					$doc_status  = get_sub_field( 'status' );
 					$status      = $doc_status && $doc_status['value'] ? $doc_status['value'] : 'other';
 					switch ( $status ) {
+						case 'up-to-date':
+							array_push( $list_uptodate, $doc_title );
+							break;
 						case 'to-do':
 							array_push( $list_todo, $doc_title );
 							break;
 						case 'processing':
 							array_push( $list_processing, $doc_title );
-							break;
-						case 'up-to-date':
-							array_push( $list_uptodate, $doc_title );
 							break;
 						case 'expired':
 							array_push( $list_expired, $doc_title );
@@ -658,9 +664,9 @@ function sc_dashboard_widgets() {
 
 				// Build column data.
 				$doc_cols = array(
+					array( $list_uptodate, 'up-to-date' ),
 					array( $list_todo, 'to-do' ),
 					array( $list_processing, 'processing' ),
-					array( $list_uptodate, 'up-to-date' ),
 					array( $list_expired, 'expired' ),
 					array( $list_other, 'other' ),
 				);
