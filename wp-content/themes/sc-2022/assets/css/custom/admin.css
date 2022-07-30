@@ -5,7 +5,18 @@ tr.user-admin-color-wrap,
 tr.user-comment-shortcuts-wrap,
 tr.user-admin-bar-front-wrap,
 tr.user-url-wrap,
-.application-passwords {
+tr.user-facebook-wrap,
+tr.user-instagram-wrap,
+tr.user-linkedin-wrap,
+tr.user-myspace-wrap,
+tr.user-pinterest-wrap,
+tr.user-soundcloud-wrap,
+tr.user-tumblr-wrap,
+tr.user-twitter-wrap,
+tr.user-youtube-wrap,
+tr.user-wikipedia-wrap,
+.application-passwords,
+.yoast.yoast-settings {
   display: none;
 }
 
@@ -14,6 +25,11 @@ tr.user-url-wrap,
   width: 100% !important;
 }
 
+#wpseo-dashboard-overview {
+  display: none !important;
+}
+
+/* colors */
 .bg-to-do { background: #0284c7; }
 .bg-processing { background: #f59e0b; }
 .bg-up-to-date { background: #16a34a; }
