@@ -60,6 +60,7 @@ function sc_build_column__text( $col ) {
 function sc_build_column__gallery( $col ) {
 	// Unique ID is needed for slick.
 	$show_captions = sc_acf_subfield( $col, 'show_captions' );
+	$image_sizes   = sc_acf_subfield( $col, 'image_sizes' ) ?? 'card';
 	$images        = sc_acf_subfield( $col, 'images' );
 	$image_count   = count( $images );
 	if ( empty( $image_count ) ) {
@@ -74,7 +75,7 @@ function sc_build_column__gallery( $col ) {
 			$caption_text .= ' - ' . $image_caption;
 		}
 		echo '<figure class="">';
-		echo wp_get_attachment_image( $image, 'card', null, array( 'class' => '' ) );
+		echo wp_get_attachment_image( $image, $image_sizes, null, array( 'class' => '' ) );
 		echo '<figcaption class="py-2 flex justify-center items-center text-center">' . esc_html( $caption_text ) . '</figcaption>';
 		echo '</figure>';
 		$image_index++;
@@ -89,10 +90,9 @@ function sc_build_column__gallery( $col ) {
  */
 function sc_build_column__image( $col ) {
 	$show_caption = sc_acf_subfield( $col, 'show_caption' );
-	$image_sizes  = sc_acf_subfield( $col, 'image_sizes' );
 	$image        = sc_acf_subfield( $col, 'image' );
 	echo '<figure class="flex flex-col">';
-	echo wp_get_attachment_image( $image, $image_sizes, null, array( 'class' => '' ) );
+	echo wp_get_attachment_image( $image, 'medium', null, array( 'class' => '' ) );
 	if ( $show_caption ) {
 		echo '<figcaption class="py-2">' . esc_html( wp_get_attachment_caption( $image ) ) . '</figcaption>';
 	}
